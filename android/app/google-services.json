@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "352805091066",
+    "firebase_url": "https://rnimagestorage.firebaseio.com",
+    "project_id": "rnimagestorage",
+    "storage_bucket": "rnimagestorage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352805091066:android:59bb5eaba5ba21becafb43",
+        "android_client_info": {
+          "package_name": "com.warehousemanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352805091066-50g5lt4qor38url6hkdn5omhipvqmu8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiCK4EkK1qbtUoRKH_8hrgz4gpi1OtqBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352805091066-50g5lt4qor38url6hkdn5omhipvqmu8b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
