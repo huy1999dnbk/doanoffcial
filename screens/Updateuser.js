@@ -6,13 +6,14 @@ import {
     Image,
     ActivityIndicator,
     Platform,
-    Button
+    Button,
+    TouchableOpacity
 } from 'react-native';
 import { Formik } from 'formik';
 import Formfield from '../component/Formfield';
 import FormUpdate from '../component/FormUpdate';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faCommentsDollar, faLock } from '@fortawesome/free-solid-svg-icons';
 import { faMale } from '@fortawesome/free-solid-svg-icons';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faMapMarker } from '@fortawesome/free-solid-svg-icons';
@@ -44,7 +45,7 @@ const Updateuser = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('');
 
-
+    const [isUploadSuccess, setIsUploadSuccess] = useState(false);
     const loadProfile = async () => {
         const tokenID = await AsyncStorage.getItem('idtoken');
         const Id_user = await AsyncStorage.getItem('id_USER');
@@ -81,8 +82,10 @@ const Updateuser = () => {
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
+                setIsUploadSuccess(true);
                 console.log(response);
                 let path = getPlatformPath(response).value;
+                console.log('path la: ', path);
                 let fileName = getFileName(response.fileName, path);
                 setParam(fileName, path);
                 setImagePath(path);
@@ -155,24 +158,39 @@ const Updateuser = () => {
         <>
             <TouchableWithoutFeedback>
                 <ScrollView style={styles.header}>
-
                     <View style={styles.imgContainer}>
-                        <Text style={styles.boldTextStyle}>{status}</Text>
-                        <Image style={styles.uploadImage} source={imgSource} />
                         <View style={styles.eightyWidthStyle} >
-                            <Button title={'Upload Image'} onPress={chooseFile}></Button>
-                            <Button title={'Upload Image'} onPress={() => {
-                                Alert.alert('Notice!!!', 'You want to update your avatar?', [
-                                    {
-                                        text: 'Yes',
-                                        onPress: () => uploadImageToStorage(localPath, localName)
-                                    },
-                                    { text: 'No', style: 'cancel' },
-                                ])
-                            }}></Button>
+                            <TouchableOpacity onPress={chooseFile}>
+                                <Image style={styles.uploadImage} source={imgSource} />
+                            </TouchableOpacity>
+                            <View style={{marginTop:30,borderRadius:15}}>
+                                <Button title={'Upload Image'} onPress={() => {
+                                    if (isUploadSuccess) {
+                                        uploadImageToStorage(localPath, localName)
+                                    } else {
+                                        Alert.alert(
+                                            'Error',
+                                            'Cannot update your avatar!!!!!',
+                                            [
+                                                {
+                                                    text: 'cancel',
+                                                    style: 'cancel',
+                                                },
+                                            ],
+                                        );
+                                    }
+                                }} color="#FF5858" />
+                            </View>
                             {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
+                            <Text style={styles.boldTextStyle}>{status}</Text>
                         </View>
                     </View>
+                    <View style={{
+                        height: 1,
+                        backgroundColor: "#CED0CE",
+                        marginHorizontal: "10%",
+                        marginBottom: 15
+                    }} />
                     <View style={styles.formik}>
                         <Formik
                             enableReinitialize={true}
@@ -252,7 +270,7 @@ const styles = StyleSheet.create({
         //alignItems: 'center',
         //height: 800,
         width: '100%',
-        backgroundColor: '#fff'
+        backgroundColor: 'rgba(255,255,255,0.6)'
     },
     text: {
         color: '#FFF0F0',
@@ -264,35 +282,45 @@ const styles = StyleSheet.create({
         paddingTop: 45,
         //width: 380,
         height: 700,
-        backgroundColor: '#fff',
+        //backgroundColor: '#fff',
         //marginHorizontal: 60,
         borderTopWidth: 0,
 
     },
     imgContainer: {
-        alignSelf: 'center',
-        width: 150,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
         height: 300,
-        backgroundColor: '#fff'
+
     },
     eightyWidthStyle: {
-        width: 150,
+        width: 200,
         marginTop: 10,
     },
     uploadImage: {
         width: 150,
-        height: 130,
+        height: 150,
+        borderRadius:75,
+        alignSelf:'center',
     },
     loadingIndicator: {
         zIndex: 5,
         width: 50,
         height: 50,
+        alignSelf: 'center'
     },
     boldTextStyle: {
-        fontWeight: 'bold',
-        fontSize: 14,
-        color: '#5EB0E5',
+        fontWeight: '600',
+        fontSize: 13,
+        color: 'black',
+        fontFamily: 'Roboto-Light',
+        textAlign:'center',
     }
 });
 
 export default Updateuser;
+
+
+
+
