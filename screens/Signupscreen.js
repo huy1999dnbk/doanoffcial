@@ -41,7 +41,7 @@ const SignupScreen = ({navigation}) => {
                 address: '',
               }}
               onSubmit={async (values) => {
-                await fetch('https://cnpmwarehouse.herokuapp.com/users', {
+                await fetch('https://managewarehouse.herokuapp.com/users', {
                   method: 'POST',
                   headers: {
                     accept: 'application/json',

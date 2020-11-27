@@ -18,6 +18,7 @@ const Input = ({
   add_stock,
   pop_stock_imp,
   pop_stock_exp,
+  imageURL
 }) => {
   const [text, setText] = useState('');
   const [imp, setImp] = useState(false);
@@ -29,7 +30,9 @@ const Input = ({
         <TouchableOpacity onPress={onPress}>
           <Image
             style={styles.tinyLogo}
-            source={require('../assets/images/fish.jpg')}
+            source={{
+              uri: imageURL,
+            }}
           />
         </TouchableOpacity>
         <View style={styles.rest}>

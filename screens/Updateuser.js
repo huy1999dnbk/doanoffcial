@@ -24,6 +24,7 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import * as Yup from 'yup';
 
+
 const validationSchema = Yup.object().shape({
     name: Yup.string().required().label('Name'),
     phone: Yup.string().required().label('Phone'),
@@ -34,12 +35,17 @@ const validationSchema = Yup.object().shape({
 
 
 const Updateuser = () => {
+
+
     const [current_name, setCurrent_Name] = useState('');
     const [current_Phone, setCurrent_Phone] = useState('');
     const [current_Email, setCurrent_Email] = useState('');
     const [current_Address, setCurrent_Address] = useState('');
-
-    const [imagePath, setImagePath] = useState(require('../assets/images/user.jpg'));
+    const [idUser, setIdUser] = useState(0);
+    const [urlFireBase, setUrlFireBase] = useState('');
+    const [isUpload, setIsUpload] = useState(false);
+    //const [imaURL,setImaURL] = useState('');
+    const [imagePath, setImagePath] = useState('');
     const [localName, setLocalName] = useState('');
     const [localPath, setLocalPath] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +55,7 @@ const Updateuser = () => {
     const loadProfile = async () => {
         const tokenID = await AsyncStorage.getItem('idtoken');
         const Id_user = await AsyncStorage.getItem('id_USER');
-        await fetch(`https://cnpmwarehouse.herokuapp.com/users/${Id_user}`, {
+        await fetch(`https://managewarehouse.herokuapp.com/users/${Id_user}`, {
             method: 'GET',
             headers: {
                 accept: 'application/json',
@@ -61,9 +67,13 @@ const Updateuser = () => {
                 setCurrent_Phone(resJson.data.phone);
                 setCurrent_Address(resJson.data.address);
                 setCurrent_Email(resJson.data.email);
+                setImagePath(resJson.data.image);
+                setIdUser(resJson.data.id);
             })
     };
-    loadProfile();
+    useEffect(() => {
+        loadProfile();
+    }, [])
 
     const chooseFile = () => {
         setStatus('');
@@ -83,7 +93,7 @@ const Updateuser = () => {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 setIsUploadSuccess(true);
-                console.log(response);
+                setIsUpload(true);
                 let path = getPlatformPath(response).value;
                 console.log('path la: ', path);
                 let fileName = getFileName(response.fileName, path);
@@ -122,6 +132,7 @@ const Updateuser = () => {
                 const ref = storage().ref(name);
                 const url = await ref.getDownloadURL();
                 console.log(url);
+                setUrlFireBase(url);
             }
             getURL();
         }).catch((e) => {
@@ -142,13 +153,20 @@ const Updateuser = () => {
 
 
     const getPlatformURI = (imagePath) => {
-        let imgSource = imagePath;
+        let imgSource = null;
         if (isNaN(imagePath)) {
-            imgSource = { uri: imagePath };
-            if (Platform.OS == 'android') {
-                imgSource.uri = "file:///" + imgSource.uri;
+            if (!isUpload) {
+                imgSource = { uri: imagePath };
+
+            } else if (isUpload) {
+                imgSource = { uri: imagePath };
+                if (Platform.OS == 'android') {
+                    imgSource.uri = "file:///" + imgSource.uri;
+
+                }
             }
         }
+        console.log(imgSource)
         return imgSource
     }
 
@@ -163,23 +181,8 @@ const Updateuser = () => {
                             <TouchableOpacity onPress={chooseFile}>
                                 <Image style={styles.uploadImage} source={imgSource} />
                             </TouchableOpacity>
-                            <View style={{marginTop:30,borderRadius:15}}>
-                                <Button title={'Upload Image'} onPress={() => {
-                                    if (isUploadSuccess) {
-                                        uploadImageToStorage(localPath, localName)
-                                    } else {
-                                        Alert.alert(
-                                            'Error',
-                                            'Cannot update your avatar!!!!!',
-                                            [
-                                                {
-                                                    text: 'cancel',
-                                                    style: 'cancel',
-                                                },
-                                            ],
-                                        );
-                                    }
-                                }} color="#FF5858" />
+                            <View style={{ marginTop: 30, borderRadius: 15 }}>
+                                <Button title={'Upload Image'}  />
                             </View>
                             {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
                             <Text style={styles.boldTextStyle}>{status}</Text>
@@ -200,7 +203,50 @@ const Updateuser = () => {
                                 email: current_Email,
                                 address: current_Address,
                             }}
-                            onSubmit={() => console.log("nhan button nay d xu ly ")}
+                            onSubmit={async () => {
+                                const tokenID = await AsyncStorage.getItem('idtoken');
+                                await uploadImageToStorage(localPath, localName);
+                                await fetch(`https://managewarehouse.herokuapp.com/users/${idUser}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        accept: 'application/json',
+                                        Authorization: `Bearer ${tokenID}`,
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        name: name,
+                                        phone: phone,
+                                        email: email,
+                                        address: address,
+                                        image: urlFireBase
+                                    })
+                                }).then((res) => res.json())
+                                    .then(resJson => {
+                                        if (resJson.status === 200) {
+                                            Alert.alert(
+                                                'Notification',
+                                                'Update successfully',
+                                                [
+                                                    {
+                                                        text: 'cancel',
+                                                        style: 'cancel',
+                                                    },
+                                                ],
+                                            );
+                                        } else {
+                                            Alert.alert(
+                                                'Notification',
+                                                'Cannot update your profile',
+                                                [
+                                                    {
+                                                        text: 'cancel',
+                                                        style: 'cancel',
+                                                    },
+                                                ],
+                                            );
+                                        }
+                                    })
+                            }}
                             validationSchema={validationSchema}>
                             {({
                                 handleChange,
@@ -301,8 +347,8 @@ const styles = StyleSheet.create({
     uploadImage: {
         width: 150,
         height: 150,
-        borderRadius:75,
-        alignSelf:'center',
+        borderRadius: 75,
+        alignSelf: 'center',
     },
     loadingIndicator: {
         zIndex: 5,
@@ -315,7 +361,7 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: 'black',
         fontFamily: 'Roboto-Light',
-        textAlign:'center',
+        textAlign: 'center',
     }
 });
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,13 @@ import {
   Animated,
   Button
 } from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPrescriptionBottle} from '@fortawesome/free-solid-svg-icons';
-import {faMapMarkerAlt} from '@fortawesome/free-solid-svg-icons';
-import {faIndustry} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faPrescriptionBottle } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faIndustry } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const Mainscreen = ({navigation}) => {
+const Mainscreen = ({ navigation }) => {
   const [warehouse, setWarehouse] = useState([]);
   const [pageLimit, setPageLimit] = useState(1);
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -38,7 +38,7 @@ const Mainscreen = ({navigation}) => {
     const token = await AsyncStorage.getItem('idtoken');
 
     await fetch(
-      'https://cnpmwarehouse.herokuapp.com/warehouses/user?limit=10&page=' + pageCurrent,
+      'https://managewarehouse.herokuapp.com/warehouses?limit=10&page=' + pageCurrent,
       {
         method: 'GET',
         headers: {
@@ -55,20 +55,23 @@ const Mainscreen = ({navigation}) => {
       });
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     return (
       <Pressable
         onPress={() => {
           navigation.navigate('Detail', {
             idwarehouse: item.id,
           });
+          console.log(item.id)
         }}>
         <View style={styles.card}>
           <Image
             style={styles.tinyLogo}
-            source={require('../assets/images/blakcstonemain.jpg')}
+            source={{
+              uri: item.image,
+            }}
           />
-          <View style={{marginTop: 15}}>
+          <View style={{ marginTop: 15 }}>
             <View style={styles.info}>
               <FontAwesomeIcon
                 style={styles.icon}
@@ -130,13 +133,13 @@ const Mainscreen = ({navigation}) => {
           keyExtractor={(item) => item.id.toString()}
           initialNumToRender={20}
           renderItem={renderItem}
-          onScroll={Animated.timing(scrollY,{
+          onScroll={Animated.timing(scrollY, {
             toValue: 0,
             isInteraction: false,
             useNativeDriver: true
           }).start()}
           getItemLayout={(data, index) => (
-            {length: 100, offset: 100 * index, index}
+            { length: 100, offset: 100 * index, index }
           )}
           ListFooterComponent={handleFooter}
           onEndReached={handleLoadMore}

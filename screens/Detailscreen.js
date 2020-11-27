@@ -61,7 +61,7 @@ const Detailscreen = ({ route }) => {
 
   };
   //console.log(searchProduct);
-  //them 1 object product vao mang de import va export
+  //them 1 object product vao mang de import va export, x la 1 object truyen vao 
   const add_stock = (x) => {
     if (addStock.length === 0) {
       setAddStock(addStock.concat(x));
@@ -164,7 +164,7 @@ const Detailscreen = ({ route }) => {
   const fetchData = async () => {
     const tokenuser02 = await AsyncStorage.getItem('idtoken');
     await fetch(
-      `https://cnpmwarehouse.herokuapp.com/Products/warehouse/${idwarehouse}?limit=5&page=${page}`,
+      `https://managewarehouse.herokuapp.com/products/warehouse/${idwarehouse}?limit=5&page=${page}`,
       {
         method: 'GET',
         headers: {
@@ -175,10 +175,10 @@ const Detailscreen = ({ route }) => {
     )
       .then((response) => response.json())
       .then((responseJson) => {
-        setPageLimit(responseJson.data.pageCount);
-        setProductByIdWh(productByIdWh.concat(responseJson.data.products));
+        setPageLimit(responseJson.pageCount);
+        setProductByIdWh(productByIdWh.concat(responseJson.data));
         setLoading(false);
-        setCurrentPage(responseJson.data.currentPage);
+        setCurrentPage(responseJson.currentPage);
       });
   };
   // fetch product de tim kiem real time
@@ -187,7 +187,7 @@ const Detailscreen = ({ route }) => {
     if (query === '') return;
     else if (query !== '') {
       var handleQuery = query.replace(/ /g, '%20');
-
+      // cho nay can sua lai link API cho dung
       await fetch(
         `https://cnpmwarehouse.herokuapp.com/Products/search/${handleQuery}`,
         {
@@ -314,7 +314,7 @@ const Detailscreen = ({ route }) => {
                       const tokenuser = await AsyncStorage.getItem('idtoken');
 
                       await fetch(
-                        'https://cnpmwarehouse.herokuapp.com/products',
+                        'https://managewarehouse.herokuapp.com/products',
                         {
                           method: 'POST',
                           headers: {
@@ -420,6 +420,7 @@ const Detailscreen = ({ route }) => {
             <Input
               idwarehouse={idwarehouse}
               name={item.name}
+              imageURL={item.image}
               add_stock={add_stock}
               pop_stock_imp={pop_stock_imp}
               pop_stock_exp={pop_stock_exp}

@@ -87,7 +87,7 @@ const MainRoutes = () => {
     if (query === '') return;
     else if (query !== '') {
       var handledQuery = query.replace(/ /g, '%20');
-
+      //cho nay can them API
       await fetch(
         `https://cnpmwarehouse.herokuapp.com/Users/search/${handledQuery}`,
         {
@@ -140,6 +140,7 @@ const MainRoutes = () => {
                         onPress: async () => {
                           const tokenId1 = await AsyncStorage.getItem('idtoken');
                           const idhouse = await AsyncStorage.getItem('id_warehouse');
+                          //cho nay can them api 
                           await fetch(
                             'https://cnpmwarehouse.herokuapp.com/warehouses/user',
                             {
