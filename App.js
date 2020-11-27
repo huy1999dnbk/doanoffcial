@@ -89,7 +89,7 @@ const MainRoutes = () => {
       var handledQuery = query.replace(/ /g, '%20');
       //cho nay can them API
       await fetch(
-        `https://cnpmwarehouse.herokuapp.com/Users/search/${handledQuery}`,
+        `https://managewarehouse.herokuapp.com/users/search/${handledQuery}`,
         {
           method: 'GET',
           headers: {
@@ -100,7 +100,7 @@ const MainRoutes = () => {
       )
         .then((res) => res.json())
         .then((resJson) => {
-          setUser(resJson.data.users);
+          setUser(resJson.data.data.users);
         });
     }
   };

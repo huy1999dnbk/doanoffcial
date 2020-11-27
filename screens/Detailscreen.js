@@ -189,7 +189,7 @@ const Detailscreen = ({ route }) => {
       var handleQuery = query.replace(/ /g, '%20');
       // cho nay can sua lai link API cho dung
       await fetch(
-        `https://cnpmwarehouse.herokuapp.com/Products/search/${handleQuery}`,
+        `https://managewarehouse.herokuapp.com/Products/search/${handleQuery}`,
         {
           method: 'GET',
           headers: {
@@ -200,7 +200,7 @@ const Detailscreen = ({ route }) => {
       )
         .then((res) => res.json())
         .then((resJson) => {
-          setProduct(resJson.data.products);
+          setProduct(resJson.data.data.products);
         });
     }
   };

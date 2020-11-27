@@ -69,6 +69,7 @@ const Updateuser = () => {
                 setCurrent_Email(resJson.data.email);
                 setImagePath(resJson.data.image);
                 setIdUser(resJson.data.id);
+                setUrlFireBase(resJson.data.image);
             })
     };
     useEffect(() => {
@@ -131,7 +132,7 @@ const Updateuser = () => {
             const getURL = async () => {
                 const ref = storage().ref(name);
                 const url = await ref.getDownloadURL();
-                console.log(url);
+                //console.log(url);
                 setUrlFireBase(url);
             }
             getURL();
@@ -182,7 +183,7 @@ const Updateuser = () => {
                                 <Image style={styles.uploadImage} source={imgSource} />
                             </TouchableOpacity>
                             <View style={{ marginTop: 30, borderRadius: 15 }}>
-                                <Button title={'Upload Image'}  />
+                                <Button title={'Upload Image'} onPress={() => uploadImageToStorage(localPath, localName)} />
                             </View>
                             {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
                             <Text style={styles.boldTextStyle}>{status}</Text>
@@ -203,21 +204,21 @@ const Updateuser = () => {
                                 email: current_Email,
                                 address: current_Address,
                             }}
-                            onSubmit={async () => {
+                            onSubmit={async (values) => {
                                 const tokenID = await AsyncStorage.getItem('idtoken');
-                                await uploadImageToStorage(localPath, localName);
+                                console.log(urlFireBase)
                                 await fetch(`https://managewarehouse.herokuapp.com/users/${idUser}`, {
-                                    method: 'GET',
+                                    method: 'PATCH',
                                     headers: {
                                         accept: 'application/json',
                                         Authorization: `Bearer ${tokenID}`,
                                         'Content-Type': 'application/json',
                                     },
                                     body: JSON.stringify({
-                                        name: name,
-                                        phone: phone,
-                                        email: email,
-                                        address: address,
+                                        name: values.name,
+                                        phone: values.phone,
+                                        email: values.email,
+                                        address: values.address,
                                         image: urlFireBase
                                     })
                                 }).then((res) => res.json())
@@ -297,7 +298,7 @@ const Updateuser = () => {
                                             visible={touched.address}
                                         />
                                         <View style={{ marginHorizontal: 35 }}>
-                                            <Appbutton title="Register" onPress={handleSubmit} />
+                                            <Appbutton title="UPDATE" onPress={handleSubmit} />
                                         </View>
                                     </>
                                 )}
@@ -312,6 +313,7 @@ const Updateuser = () => {
 
 const styles = StyleSheet.create({
     header: {
+        height:'100%',
         //flex: 1,
         //alignItems: 'center',
         //height: 800,
