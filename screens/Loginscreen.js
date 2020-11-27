@@ -20,8 +20,8 @@ import {
 import Appbutton from '../component/Appbutton';
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(4).label('Password'),
+  email: Yup.string().required().email().label('email'),
+  password: Yup.string().required().min(4).label('password'),
 });
 
 const Loginscreen = ({ navigation }) => {

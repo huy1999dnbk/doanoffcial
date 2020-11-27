@@ -38,7 +38,7 @@ function CustomDrawerContent({ ...props }) {
               text: 'Yes',
               onPress: async () => {
                 await AsyncStorage.removeItem('idtoken');
-                props.navigation.navigate('Login');
+                props.navigation.push('Login');
               },
             },
             { text: 'No', style: 'cancel' },

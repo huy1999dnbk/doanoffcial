@@ -8,7 +8,8 @@ const FormUpdate = ({
   onChangeText,
   secureTextEntry,
   onBlur,
-  value
+  value,
+  editable
 }) => {
   return (
     <>
@@ -23,6 +24,7 @@ const FormUpdate = ({
           placeholder={placeholder}
           onBlur={onBlur}
           value={value}
+          editable={editable}
         />
       </View>
     </>

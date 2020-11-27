@@ -26,11 +26,11 @@ import * as Yup from 'yup';
 
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required().label('Name'),
-    phone: Yup.string().required().label('Phone'),
-    email: Yup.string().required().email().label('Email'),
+    name: Yup.string().required().label('name'),
+    phone: Yup.string().required().label('phone'),
+    email: Yup.string().required().email().label('email'),
     //password: Yup.string().required().min(4).label('Password'),
-    address: Yup.string().required().label('Address'),
+    address: Yup.string().required().label('address'),
 });
 
 
@@ -265,6 +265,7 @@ const Updateuser = () => {
                                             onChangeText={handleChange('name')}
                                             onBlur={() => setFieldTouched('name')}
                                             value={values.name}
+                                            editable={true}
                                         />
                                         <ErrorMessage error={errors.name} visible={touched.name} />
                                         <FormUpdate
@@ -274,6 +275,7 @@ const Updateuser = () => {
                                             onChangeText={handleChange('phone')}
                                             onBlur={() => setFieldTouched('phone')}
                                             value={values.phone}
+                                            editable={true}
                                         />
                                         <ErrorMessage error={errors.phone} visible={touched.phone} />
                                         <FormUpdate
@@ -283,6 +285,7 @@ const Updateuser = () => {
                                             onChangeText={handleChange('email')}
                                             onBlur={() => setFieldTouched('email')}
                                             value={values.email}
+                                            editable={false}
                                         />
                                         <ErrorMessage error={errors.email} visible={touched.email} />
                                         <FormUpdate
@@ -292,6 +295,7 @@ const Updateuser = () => {
                                             onChangeText={handleChange('address')}
                                             onBlur={() => setFieldTouched('address')}
                                             value={values.address}
+                                            editable={true}
                                         />
                                         <ErrorMessage
                                             error={errors.address}

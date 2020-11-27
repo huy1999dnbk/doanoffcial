@@ -27,11 +27,11 @@ import ImagePicker from 'react-native-image-picker';
 import * as Yup from 'yup';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required().label('Name'),
-  phone: Yup.string().required().label('Phone'),
-  email: Yup.string().required().email().label('Email'),
-  password: Yup.string().required().min(4).label('Password'),
-  address: Yup.string().required().label('Address'),
+  name: Yup.string().required().label('name'),
+  phone: Yup.string().required().label('phone'),
+  email: Yup.string().required().email().label('email'),
+  password: Yup.string().required().min(4).label('password'),
+  address: Yup.string().required().label('address'),
 });
 const SignupScreen = ({ navigation }) => {
 

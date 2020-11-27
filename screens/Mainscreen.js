@@ -38,7 +38,7 @@ const Mainscreen = ({ navigation }) => {
     const token = await AsyncStorage.getItem('idtoken');
 
     await fetch(
-      'https://managewarehouse.herokuapp.com/warehouses?limit=10&page=' + pageCurrent,
+      'https://managewarehouse.herokuapp.com/warehouses/user?limit=10&page=' + pageCurrent,
       {
         method: 'GET',
         headers: {
@@ -49,7 +49,7 @@ const Mainscreen = ({ navigation }) => {
     )
       .then((response) => response.json())
       .then((responseJson) => {
-        setWarehouse(warehouse.concat(responseJson.data.warehouses));
+        setWarehouse(warehouse.concat(responseJson.data.warehouses.warehouses));
         setIsLoading(false);
         setPageLimit(responseJson.data.pageCount);
       });
