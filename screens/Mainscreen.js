@@ -10,11 +10,14 @@ import {
   Animated,
   Button
 } from 'react-native';
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPrescriptionBottle } from '@fortawesome/free-solid-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faIndustry } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-community/async-storage';
+import Swiper from 'react-native-swiper'
 
 const Mainscreen = ({ navigation }) => {
   const [warehouse, setWarehouse] = useState([]);
@@ -57,44 +60,59 @@ const Mainscreen = ({ navigation }) => {
 
   renderItem = ({ item }) => {
     return (
-      <Pressable
-        onPress={() => {
+      <Swiper showsButtons={false} style={{ height: 100, marginBottom: 15, }} showsPagination={false}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Detail', {
+              idwarehouse: item.id,
+            });
+          }}>
+          <View style={styles.card}>
+            <Image
+              style={styles.tinyLogo}
+              source={{
+                uri: item.image,
+              }}
+            />
+            <View style={{ marginTop: 15 }}>
+              <View style={styles.info}>
+                <FontAwesomeIcon
+                  style={styles.icon}
+                  icon={faIndustry}
+                  size={18}
+                />
+                <Text numberOfLines={3} style={styles.text}>
+                  {item.name}
+                </Text>
+              </View>
+              <View style={styles.info}>
+                <FontAwesomeIcon
+                  style={styles.icon}
+                  icon={faMapMarkerAlt}
+                  size={18}
+                />
+                <Text numberOfLines={3} style={styles.text}>
+                  {item.address}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </Pressable>
+        <Pressable onPress={() => {
           navigation.navigate('Detail', {
             idwarehouse: item.id,
           });
-          console.log(item.id)
         }}>
-        <View style={styles.card}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri: item.image,
-            }}
-          />
-          <View style={{ marginTop: 15 }}>
-            <View style={styles.info}>
-              <FontAwesomeIcon
-                style={styles.icon}
-                icon={faIndustry}
-                size={18}
-              />
-              <Text numberOfLines={3} style={styles.text}>
-                {item.name}
-              </Text>
-            </View>
-            <View style={styles.info}>
-              <FontAwesomeIcon
-                style={styles.icon}
-                icon={faMapMarkerAlt}
-                size={18}
-              />
-              <Text numberOfLines={3} style={styles.text}>
-                {item.address}
-              </Text>
-            </View>
+          <View style={styles.card}>
+            <FontAwesomeIcon
+              style={styles.icon}
+              icon={faClipboard}
+              size={18}
+            />
+            <Text style={styles.text}>Description: {item.description}</Text>
           </View>
-        </View>
-      </Pressable>
+        </Pressable>
+      </Swiper>
     );
   };
 

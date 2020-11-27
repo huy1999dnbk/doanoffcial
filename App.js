@@ -142,7 +142,7 @@ const MainRoutes = () => {
                           const idhouse = await AsyncStorage.getItem('id_warehouse');
                           //cho nay can them api 
                           await fetch(
-                            'https://cnpmwarehouse.herokuapp.com/warehouses/user',
+                            'https://managewarehouse.herokuapp.com/warehouses/user',
                             {
                               method: 'POST',
                               headers: {

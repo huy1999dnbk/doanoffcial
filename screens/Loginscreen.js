@@ -81,7 +81,7 @@ const Loginscreen = ({ navigation }) => {
                         ]);
                       } else {
                         check('idtoken', responseData.token);
-                        navigation.navigate('Main');
+                        navigation.push('Main');
                       }
                     });
                 }
