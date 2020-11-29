@@ -42,7 +42,7 @@ const Loginscreen = ({ navigation }) => {
           <View style={{ alignItems: 'center' }}>
             <Image
               style={{ width: 250, height: 250 }}
-              source={require('../assets/images/logooffcial.png')}
+              source={require('../assets/images/newlogo.png')}
             />
           </View>
           <View style={styles.form}>
@@ -95,6 +95,9 @@ const Loginscreen = ({ navigation }) => {
                 touched,
               }) => (
                   <>
+                    <View style={{ marginLeft: 50, marginBottom: 10 }}>
+                      <Text style={{ fontFamily: 'Roboto-Medium', color: '#3f51b5' }}>Email</Text>
+                    </View>
                     <Formfield
                       placeholder="Email"
                       secureTextEntry={false}
@@ -103,6 +106,9 @@ const Loginscreen = ({ navigation }) => {
                       onBlur={() => setFieldTouched('email')}
                     />
                     <ErrorMessage error={errors.email} visible={touched.email} />
+                    <View style={{ marginLeft: 50, marginBottom: 10 }}>
+                      <Text style={{ fontFamily: 'Roboto-Medium', color: '#3f51b5' }}>Password</Text>
+                    </View>
                     <Formfield
                       placeholder="Password"
                       secureTextEntry={true}

@@ -241,7 +241,15 @@ const MainRoutes = () => {
                 </TouchableOpacity>
               );
             },
-            title: 'Warehouse Management',
+            title: 'WAREHOUSE',
+            headerTitleStyle: {
+              alignSelf: 'center',
+              marginRight: 30,
+              color: '#fff'
+            },
+            headerStyle: {
+              backgroundColor: '#3f51b5'
+            }
           })}
         />
         <Stack.Screen
@@ -260,6 +268,19 @@ const MainRoutes = () => {
                   </TouchableOpacity>
                 ) : null
             },
+            headerLeftContainerStyle: {
+              backgroundColor: '#fff'
+            },
+            title: 'DETAIL',
+            headerTitleStyle: {
+              alignSelf: 'center',
+              marginRight: 30,
+              color: '#fff'
+            },
+            headerStyle: {
+              backgroundColor: '#2b2c2e'
+            },
+
           })}
         />
       </Stack.Navigator>
@@ -332,11 +353,11 @@ const App = () => {
 
 const styles = StyleSheet.create({
   icon: {
-    color: '#FC4646',
+    color: '#fff',
     marginLeft: 15
   },
   icondetail: {
-    color: '#FC4646',
+    color: '#fff',
     marginRight: 25
   },
   ViewCart: {

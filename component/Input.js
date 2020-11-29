@@ -9,7 +9,7 @@ import {
   Alert,
   Button,
 } from 'react-native';
-
+import Buttonaction from '../component/Buttonaction';
 const Input = ({
   stock,
   name,
@@ -27,25 +27,47 @@ const Input = ({
   return (
     <>
       <View style={styles.card}>
-        <TouchableOpacity onPress={onPress}>
-          <Image
-            style={styles.tinyLogo}
-            source={{
-              uri: imageURL,
-            }}
-          />
-        </TouchableOpacity>
-        <View style={styles.rest}>
-          <View style={styles.information}>
-            <Text numberOfLines={2} style={styles.text}>
-              {name}
-            </Text>
-            <Text style={styles.text}>{stock}</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={onPress}>
+            <Image
+              style={styles.tinyLogo}
+              source={{
+                uri: imageURL,
+              }}
+            />
+          </TouchableOpacity>
+          <View style={styles.rest}>
+            <View style={styles.information}>
+              <View style={{  alignItems: 'flex-start', justifyContent: 'flex-start',width:240, }}>
+                <Text numberOfLines={2} style={styles.text}>
+                  {name}
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ fontFamily: 'Roboto-Italic', fontSize: 18,color:'#7b7d6f' }}>Quantity:</Text>
+                <Text style={{fontSize:18}}> {stock}</Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'column', marginBottom: 15 }}>
+              <View style={{ justifyContent: 'center' }}>
+                <Text style={{  fontFamily: 'Roboto-Italic', fontSize:18, color:'#7b7d6f' }}>Import/Export</Text>
+              </View>
+              <View style={styles.forminput}>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="numeric"
+                  onChangeText={(txt) => setText(txt)}
+                  value={text}
+                  placeholder="Ex: 100"
+                />
+              </View>
+            </View>
           </View>
-          <View style={styles.iconcontainer}>
-            <View style={styles.buttonform}>
-              <Button
-                color="#FF3333"
+        </View>
+        <View style={styles.iconcontainer}>
+          <View style={styles.buttonform}>
+            <View style={styles.stylebutton}>
+              <Buttonaction
                 title="CLEAR"
                 onPress={() => {
                   if (imp) {
@@ -58,7 +80,9 @@ const Input = ({
                   setText('');
                 }}
               />
-              <Button
+            </View>
+            <View style={styles.stylebutton}>
+              <Buttonaction
                 onPress={() => {
                   if (exp) {
                     Alert.alert(
@@ -93,10 +117,11 @@ const Input = ({
                   }
                 }}
                 title="IMPORT"
-                color="#FF3333"
                 disabled={imp}
               />
-              <Button
+            </View>
+            <View style={styles.stylebutton}>
+              <Buttonaction
                 onPress={() => {
                   if (imp) {
                     Alert.alert(
@@ -145,18 +170,9 @@ const Input = ({
 
                 }}
                 title="EXPORT"
-                color="#FF3333"
                 disabled={exp}
               />
             </View>
-          </View>
-          <View style={styles.forminput}>
-            <TextInput
-              style={styles.input}
-              keyboardType="numeric"
-              onChangeText={(txt) => setText(txt)}
-              value={text}
-            />
           </View>
         </View>
       </View>
@@ -165,56 +181,82 @@ const Input = ({
 };
 const styles = StyleSheet.create({
   forminput: {
-    alignSelf: 'center',
-
-    marginTop: 15,
-    height: 50,
-    width: 70,
-    borderColor: 'black',
+    //alignSelf: 'center',
+    //marginBottom: 15,
+    //marginLeft: 5,
+    height: 45,
+    width: 235,
+    //borderColor: '#f2efe6',
+    //borderWidth: 1,
+    borderRadius: 10,
+    //paddingTop:10
   },
   input: {
-    height: 50,
-    width: 70,
-    backgroundColor: '#F5F5F5',
+    height: 41,
+    width: 231,
+    backgroundColor: '#f2efe6',
+    borderRadius: 10,
+    //borderWidth:1,
+    fontFamily: 'Roboto-Black',
+    fontSize: 15,
   },
   information: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft: 5,
+    width: '70%',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    //marginLeft: 5,
     height: 75,
+
   },
   rest: {
-    marginLeft: 10,
+    //marginLeft: 10,
+    //marginTop:15,
+    marginLeft: 5,
+    //borderWidth: 1,
+    height: 160,
   },
   card: {
-    flexDirection: 'row',
-    height: 180,
-    marginHorizontal: 15,
+    //flexDirection: 'row',
+    height: 200,
+    marginHorizontal: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
-
+    //borderWidth:1,
     marginBottom: 10,
     elevation: 25,
-    overflow: 'hidden',
+    width: 405
+    //overflow: 'hidden',
   },
   iconcontainer: {
-    flexDirection: 'column',
+    //flexDirection: 'column',
+    width: 396,
+    //borderWidth: 1,
+    //marginTop: 5,
+    marginHorizontal: 4
   },
   buttonform: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 230,
+    justifyContent: 'space-around',
+    width: '100%',
   },
   tinyLogo: {
-    height: 180,
+    marginTop: 5,
+    height: 150,
     width: 150,
-    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#3f51b5',
+    marginLeft: 5
   },
   text: {
-    fontSize: 13,
-    fontFamily: 'Roboto-BoldItalic',
+    fontSize: 21,
+    fontFamily: 'Roboto-Medium',
   },
+  stylebutton: {
+    //borderWidth:1,
+    width: 130,
+    //borderWidth:1,
+    //borderRadius:10
+  }
 });
 
 export default Input;

@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 47,
     marginBottom: 25,
     borderWidth: 1.5,
-    borderColor: '#E8DEDC',
-    borderRadius: 15,
+    borderColor: '#3f51b5',
+    //borderRadius: 15,
     height: 50,
   },
   input: {
     height: 50,
     backgroundColor: 'rgba(255,255,255,0)',
     marginHorizontal: 20,
-    fontSize: 17,
+    fontSize: 13,
     fontFamily: 'Roboto-Bold',
   },
-  icon: {marginLeft: 15, marginRight: -15,color: '#F5866F'},
+  icon: {marginLeft: 15, marginRight: -15,color: '#3f51b5'},
 });
 
 export default Formfield;

@@ -41,7 +41,7 @@ const Mainscreen = ({ navigation }) => {
     const token = await AsyncStorage.getItem('idtoken');
 
     await fetch(
-      'https://managewarehouse.herokuapp.com/warehouses/user?limit=10&page=' + pageCurrent,
+      'https://managewarehouse.herokuapp.com/warehouses/user?limit=3&page=' + pageCurrent,
       {
         method: 'GET',
         headers: {
@@ -60,7 +60,7 @@ const Mainscreen = ({ navigation }) => {
 
   renderItem = ({ item }) => {
     return (
-      <Swiper showsButtons={false} style={{ height: 100, marginBottom: 15, }} showsPagination={false}>
+      <Swiper showsButtons={false} style={{ height: 250, marginBottom: 50, }} showsPagination={false}>
         <Pressable
           onPress={() => {
             navigation.navigate('Detail', {
@@ -74,7 +74,7 @@ const Mainscreen = ({ navigation }) => {
                 uri: item.image,
               }}
             />
-            <View style={{ marginTop: 15 }}>
+            <View style={{ marginTop: 15, }}>
               <View style={styles.info}>
                 <FontAwesomeIcon
                   style={styles.icon}
@@ -174,27 +174,33 @@ const styles = StyleSheet.create({
     //paddingTop: 15,
     paddingHorizontal: 15,
     backgroundColor: 'white',
+    paddingTop:20
   },
   card: {
-    flexDirection: 'row',
-    height: 100,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    marginBottom: 15,
-    elevation: 10,
-    borderRadius: 15,
+    //flexDirection: 'row',
+    height: 250,
+    backgroundColor:'#757de8',
+    //alignItems: 'flex-start',
+    marginBottom: 50,
+    //elevation: 10,
+    borderRadius: 22,
+    //borderWidth:1
   },
   tinyLogo: {
-    width: '50%',
-    height: 100,
+    borderTopLeftRadius:22,
+    borderTopRightRadius:22,
+    width: '100%',
+    height: 180,
+    //borderWidth:1
   },
   icon: {
-    color: '#FC4646',
+    color: '#fff',
   },
   text: {
     fontFamily: 'Roboto-BoldItalic',
     fontSize: 13,
     marginLeft: 15,
+    color:'#fff'
   },
   info: {
     flexDirection: 'row',

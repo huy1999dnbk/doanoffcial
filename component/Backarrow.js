@@ -16,7 +16,7 @@ const Backarrow = ({onPress}) => {
 
 const styles = StyleSheet.create({
   icon: {
-    color: '#FD6C6C',
+    color: '#3f51b5',
   },
 });
 export default Backarrow;

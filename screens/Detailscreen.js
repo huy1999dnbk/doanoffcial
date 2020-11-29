@@ -277,6 +277,7 @@ const Detailscreen = ({ route }) => {
           flex: 1,
           backgroundColor: 'white',
           zIndex: 1,
+          marginTop:5
         }}>
         <View style={styles.bigright}>
           <Addproduct
@@ -451,21 +452,24 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 300,
     width: 300,
-    height: 200,
+    height: 400,
     backgroundColor: 'white',
-    borderRadius: 25,
-    borderWidth: 2,
+    //borderWidth: 2,
     borderColor: 'black',
+    opacity:0.9,
+    justifyContent:'center',
+    borderRadius:20
   },
   ViewCart: {
     alignSelf: 'center',
     marginTop: 200,
     width: 400,
     height: 500,
-    backgroundColor: 'white',
+    backgroundColor: '#f2efe6',
     borderRadius: 25,
-    borderWidth: 2,
+    //borderWidth: 2,
     borderColor: 'black',
+    opacity:0.97
   },
   listcart: {
     height: 400,
