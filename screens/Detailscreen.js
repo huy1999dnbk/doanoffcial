@@ -19,6 +19,7 @@ import { faLuggageCart } from '@fortawesome/free-solid-svg-icons';
 import Appbutton from '../component/Appbutton';
 import Addproduct from '../component/Addproduct';
 import Input from '../component/Input';
+import ImportIcon from '../component/ImportIcon';
 const Detailscreen = ({ route }) => {
   const [productByIdWh, setProductByIdWh] = useState([]);
   const [isShowModal, setShowModal] = useState(false);
@@ -36,6 +37,7 @@ const Detailscreen = ({ route }) => {
   const [reRender, setReRender] = useState(false);
   const [searchProduct, setSearchProduct] = useState([]);
   const [showCart, setShowCart] = useState(false)
+  const [dataSrc,setDataSrc] = useState([]);
   //const [cart, setCart] = useState([]);
   const takeid = async() => {
     await AsyncStorage.setItem('id_warehouse', idwarehouse.toString());
@@ -184,7 +186,9 @@ const Detailscreen = ({ route }) => {
   // fetch product de tim kiem real time
   const fetchProduct = async () => {
     const tokenuser01 = await AsyncStorage.getItem('idtoken');
-    if (query === '') return;
+    if (query === ''){
+      setProduct([]);
+    }
     else if (query !== '') {
       var handleQuery = query.replace(/ /g, '%20');
       // cho nay can sua lai link API cho dung
@@ -280,7 +284,7 @@ const Detailscreen = ({ route }) => {
           marginTop:5
         }}>
         <View style={styles.bigright}>
-          <Addproduct
+          <ImportIcon
             onPress={() => {
               setSearchProduct([]);
               setShowAdd(true);
@@ -364,6 +368,9 @@ const Detailscreen = ({ route }) => {
 
         <Modal visible={showAdd} animationType="none">
           <View style={styles.addproduct}>
+            <View>
+              <Text>SEARCH PRODUCT</Text>
+            </View>
             <View style={{ marginHorizontal: 15, marginBottom: 40 }}>
               <TextInput
                 style={styles.searchInput}
@@ -388,12 +395,7 @@ const Detailscreen = ({ route }) => {
                   {
                     text: 'Yes',
                     onPress: () => {
-                      //console.log('addSearch sau khi search' + searchProduct);
                       handleCart();
-                      //console.log(addStock);
-                      //console.log(addStock);
-                     // console.log(addStock);
-                      //console.log(addStock);
                     }
                   },
                   {

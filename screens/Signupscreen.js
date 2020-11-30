@@ -100,7 +100,7 @@ const SignupScreen = ({ navigation }) => {
         const ref = storage().ref(name);
         const url = await ref.getDownloadURL();
         //setUrlFireBase(url);
-        console.log(url);
+        ///console.log(url);
         return url;
       }
       else return imagePath
@@ -133,7 +133,7 @@ const SignupScreen = ({ navigation }) => {
         }
       }
     }
-    console.log(imgSource)
+    //console.log(imgSource)
     return imgSource
   }
 

@@ -24,6 +24,7 @@ import Appbutton from './component/Appbutton';
 import jwt_decode from "jwt-decode";
 import Updateuser from './screens/Updateuser';
 import { faIdBadge } from '@fortawesome/free-regular-svg-icons';
+import Backarrow from './component/Backarrow';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -67,7 +68,7 @@ function CustomDrawerContent({ ...props }) {
 
 
 
-const MainRoutes = () => {
+const MainRoutes = ({navigation}) => {
   const [adduser, setAddUser] = useState(false);
   const [query, setQuery] = useState('');
   const [user, setUser] = useState([]);
@@ -270,7 +271,7 @@ const MainRoutes = () => {
         <Stack.Screen
           name="Detail"
           component={Detailscreen}
-          options={() => ({
+          options={({navigation}) => ({
             headerRight: () => {
               return adduser ?
                 (
@@ -283,13 +284,18 @@ const MainRoutes = () => {
                   </TouchableOpacity>
                 ) : null
             },
-            headerLeftContainerStyle: {
-              backgroundColor: '#fff'
+            headerLeft: () => {
+              return (
+                <Backarrow onPress={() => navigation.popToTop()} />
+              );
+            },
+            headerLeftContainerStyle:{
+              marginLeft:10
             },
             title: 'DETAIL',
             headerTitleStyle: {
               alignSelf: 'center',
-              marginRight: 30,
+              marginRight: 15,
               color: '#fff'
             },
             headerStyle: {
@@ -379,7 +385,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginRight: 25
   },
-  icondrawer:{
+  icondrawer: {
     color: '#303e5c'
   },
   ViewCart: {

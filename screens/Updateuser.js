@@ -44,15 +44,15 @@ const Updateuser = ({ navigation }) => {
     const [current_Address, setCurrent_Address] = useState('');
     const [idUser, setIdUser] = useState(0);
     const [urlFireBase, setUrlFireBase] = useState('');
-    const [isUpload, setIsUpload] = useState(false);
+    //const [isUpload, setIsUpload] = useState(false);
     //const [imaURL,setImaURL] = useState('');
     const [imagePath, setImagePath] = useState('');
     const [localName, setLocalName] = useState('');
     const [localPath, setLocalPath] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('');
-    const [isUploadSuccess,  setIsUploadSuccess] = useState(false);
-
+    const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+    const [imgSource,setImgSource] = useState({})
 
     //const isFocus = useIsFocused();
 
@@ -74,15 +74,23 @@ const Updateuser = ({ navigation }) => {
                 setImagePath(resJson.data.image);
                 setIdUser(resJson.data.id);
                 setUrlFireBase(resJson.data.image);
+                setImgSource(getPlatformURI(resJson.data.image,false));
             })
     };
     useEffect(() => {
+        const unsubscribe = navigation.addListener('blur', () => {
+            // The screen is focused
+            // Call any action
+            //console.log(1)
+            loadProfile();
+            setImgSource(getPlatformURI(imagePath,false));
+        });
+        return unsubscribe
+    }, [navigation])
+
+    useEffect(() => {
         loadProfile();
-        //console.log(1);
-    }, []);
-
-
-
+    },[])
 
     const chooseFile = () => {
         setStatus('');
@@ -102,12 +110,13 @@ const Updateuser = ({ navigation }) => {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 setIsUploadSuccess(true);
-                setIsUpload(true);
+                //setIsUpload(true);
                 let path = getPlatformPath(response).value;
                 //console.log('path la: ', path);
                 let fileName = getFileName(response.fileName, path);
                 setParam(fileName, path);
                 setImagePath(path);
+                setImgSource(getPlatformURI(path,true));
             }
         });
     };
@@ -144,8 +153,6 @@ const Updateuser = ({ navigation }) => {
 
                 const ref = storage().ref(name);
                 const url = await ref.getDownloadURL();
-                //setUrlFireBase(url);
-                console.log(url);
                 return url;
             }
             else return urlFireBase
@@ -168,13 +175,13 @@ const Updateuser = ({ navigation }) => {
     }
 
 
-    const getPlatformURI = (imagePath) => {
+    const getPlatformURI = (imagePath,isUpload) => {
         let imgSource = null;
         if (isNaN(imagePath)) {
             if (!isUpload) {
                 imgSource = { uri: imagePath };
 
-            } else if (isUpload) {
+            } else {
                 imgSource = { uri: imagePath };
                 if (Platform.OS == 'android') {
                     imgSource.uri = "file:///" + imgSource.uri;
@@ -186,7 +193,7 @@ const Updateuser = ({ navigation }) => {
         return imgSource
     }
 
-    const imgSource = getPlatformURI(imagePath);
+    //const imgSource = getPlatformURI(imagePath);
 
 
     return (
@@ -279,16 +286,16 @@ const Updateuser = ({ navigation }) => {
                                 setFieldTouched,
                                 touched,
                                 values,
-                              
+
                             }) => (
                                     <>
-                                       
+
                                         <FormUpdate
                                             placeholder="Name"
                                             secureTextEntry={false}
                                             icons={faMale}
                                             onChangeText={handleChange('name')}
-                                            onBlur={() => setFieldTouched('name')}
+                                            onBlur={() => setCurrent_Name(values.name)}
                                             value={values.name}
                                             editable={true}
                                         />
@@ -298,7 +305,7 @@ const Updateuser = ({ navigation }) => {
                                             secureTextEntry={false}
                                             icons={faPhone}
                                             onChangeText={handleChange('phone')}
-                                            onBlur={() => setFieldTouched('phone')}
+                                            onBlur={() => setCurrent_Phone(values.phone)}
                                             value={values.phone}
                                             editable={true}
                                         />
@@ -318,7 +325,7 @@ const Updateuser = ({ navigation }) => {
                                             secureTextEntry={false}
                                             icons={faMapMarker}
                                             onChangeText={handleChange('address')}
-                                            onBlur={() => setFieldTouched('address')}
+                                            onBlur={() => setCurrent_Address(values.address)}
                                             value={values.address}
                                             editable={true}
                                         />

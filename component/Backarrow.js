@@ -1,22 +1,24 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {TouchableOpacity} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons';
+import { StyleSheet,View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 
-const Backarrow = ({onPress}) => {
+const Backarrow = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <FontAwesomeIcon style={styles.icon} icon={faArrowCircleLeft} size={50} />
+      <View>
+        <FontAwesomeIcon style={styles.icon} icon={faArrowLeft} size={20} />
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   icon: {
-    color: '#3f51b5',
+    color: '#fff',
   },
 });
 export default Backarrow;
