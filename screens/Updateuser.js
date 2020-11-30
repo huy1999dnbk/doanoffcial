@@ -30,7 +30,6 @@ const validationSchema = Yup.object().shape({
     name: Yup.string().required().label('name'),
     phone: Yup.string().required().label('phone'),
     email: Yup.string().required().email().label('email'),
-    //password: Yup.string().required().min(4).label('Password'),
     address: Yup.string().required().label('address'),
 });
 
@@ -380,10 +379,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     uploadImage: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
+        width: 200,
+        height: 200,
+        borderRadius: 100,
         alignSelf: 'center',
+        borderWidth:2,
+        borderColor:'black'
     },
     loadingIndicator: {
         zIndex: 5,

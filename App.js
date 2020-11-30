@@ -328,6 +328,15 @@ const UpdateRoutes = () => {
             );
           },
           title: 'Profile',
+        
+          headerStyle: {
+            backgroundColor: '#2b2c2e'
+          },
+          headerTitleStyle: {
+            alignSelf: 'center',
+            marginRight: 50,
+            color: '#fff'
+          },
         })}
       ></Stack.Screen>
     </Stack.Navigator>
