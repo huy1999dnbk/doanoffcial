@@ -22,6 +22,7 @@ import ErrorMessage from '../component/ErrorMessage';
 import AsyncStorage from '@react-native-community/async-storage';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
+import { useIsFocused } from '@react-navigation/native';
 import * as Yup from 'yup';
 
 
@@ -34,7 +35,7 @@ const validationSchema = Yup.object().shape({
 });
 
 
-const Updateuser = () => {
+const Updateuser = ({ navigation }) => {
 
 
     const [current_name, setCurrent_Name] = useState('');
@@ -50,8 +51,11 @@ const Updateuser = () => {
     const [localPath, setLocalPath] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('');
+    const [isUploadSuccess,  setIsUploadSuccess] = useState(false);
 
-    const [isUploadSuccess, setIsUploadSuccess] = useState(false);
+
+    //const isFocus = useIsFocused();
+
     const loadProfile = async () => {
         const tokenID = await AsyncStorage.getItem('idtoken');
         const Id_user = await AsyncStorage.getItem('id_USER');
@@ -74,7 +78,11 @@ const Updateuser = () => {
     };
     useEffect(() => {
         loadProfile();
-    }, [])
+        //console.log(1);
+    }, []);
+
+
+
 
     const chooseFile = () => {
         setStatus('');
@@ -96,7 +104,7 @@ const Updateuser = () => {
                 setIsUploadSuccess(true);
                 setIsUpload(true);
                 let path = getPlatformPath(response).value;
-                console.log('path la: ', path);
+                //console.log('path la: ', path);
                 let fileName = getFileName(response.fileName, path);
                 setParam(fileName, path);
                 setImagePath(path);
@@ -119,31 +127,38 @@ const Updateuser = () => {
         return path.split("/").pop();
     }
 
+    // const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
+    //     setTimeout(() => {
+    //         cb();
+    //         resolve();
+    //     }, timeout);
+    // });
+    const uploadImageToStorage = async (path, name) => {
+        try {
+            if (isUploadSuccess) {
+                setIsLoading(true);
+                let reference = storage().ref(name);
+                let task = await reference.putFile(path);
+                setStatus('Image uploaded succesfully');
+                setIsLoading(false);
 
-    const uploadImageToStorage = (path, name) => {
-        setIsLoading(true);
-        let reference = storage().ref(name);
-        let task = reference.putFile(path);
-        task.then(() => {
-            console.log('Image uploaded to the bucket!');
-            //this.setState({ isLoading: false, status: 'Image uploaded successfully' });
-            setIsLoading(false);
-            setStatus('Image uploaded succesfully');
-            const getURL = async () => {
                 const ref = storage().ref(name);
                 const url = await ref.getDownloadURL();
-                //console.log(url);
-                setUrlFireBase(url);
+                //setUrlFireBase(url);
+                console.log(url);
+                return url;
             }
-            getURL();
-        }).catch((e) => {
-            status = 'Something went wrong';
-            console.log('uploading image error => ', e);
-            //this.setState({ isLoading: false, status: 'Something went wrong' });
+            else return urlFireBase
+        } catch (e) {
+            // status = 'Something went wrong';
             setIsLoading(false);
             setStatus('Something went wrong');
-        });
+        };
+
     }
+
+
+
 
     const getPlatformPath = ({ path, uri }) => {
         return Platform.select({
@@ -167,11 +182,12 @@ const Updateuser = () => {
                 }
             }
         }
-        console.log(imgSource)
+        //console.log(imgSource)
         return imgSource
     }
 
-    let imgSource = getPlatformURI(imagePath);
+    const imgSource = getPlatformURI(imagePath);
+
 
     return (
         <>
@@ -183,7 +199,7 @@ const Updateuser = () => {
                                 <Image style={styles.uploadImage} source={imgSource} />
                             </TouchableOpacity>
                             <View style={{ marginTop: 30, borderRadius: 15 }}>
-                                <Button title={'Upload Image'} onPress={() => uploadImageToStorage(localPath, localName)} />
+                                <Button title={'Upload Image'} />
                             </View>
                             {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
                             <Text style={styles.boldTextStyle}>{status}</Text>
@@ -206,47 +222,54 @@ const Updateuser = () => {
                             }}
                             onSubmit={async (values) => {
                                 const tokenID = await AsyncStorage.getItem('idtoken');
-                                console.log(urlFireBase)
-                                await fetch(`https://managewarehouse.herokuapp.com/users/${idUser}`, {
-                                    method: 'PATCH',
-                                    headers: {
-                                        accept: 'application/json',
-                                        Authorization: `Bearer ${tokenID}`,
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                        name: values.name,
-                                        phone: values.phone,
-                                        email: values.email,
-                                        address: values.address,
-                                        image: urlFireBase
-                                    })
-                                }).then((res) => res.json())
-                                    .then(resJson => {
-                                        if (resJson.status === 200) {
-                                            Alert.alert(
-                                                'Notification',
-                                                'Update successfully',
-                                                [
-                                                    {
-                                                        text: 'cancel',
-                                                        style: 'cancel',
-                                                    },
-                                                ],
-                                            );
-                                        } else {
-                                            Alert.alert(
-                                                'Notification',
-                                                'Cannot update your profile',
-                                                [
-                                                    {
-                                                        text: 'cancel',
-                                                        style: 'cancel',
-                                                    },
-                                                ],
-                                            );
-                                        }
-                                    })
+                                const link = await uploadImageToStorage(localPath, localName);
+                                return Promise.resolve(link)
+                                    .then(async (link) => {
+                                        // console.log('url anh tren firebase', result);
+                                        // const url1 = result;
+                                        //console.log(urlFireBase)
+                                        await fetch(`https://managewarehouse.herokuapp.com/users/${idUser}`, {
+                                            method: 'PATCH',
+                                            headers: {
+                                                accept: 'application/json',
+                                                Authorization: `Bearer ${tokenID}`,
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                name: values.name,
+                                                phone: values.phone,
+                                                email: values.email,
+                                                address: values.address,
+                                                image: link
+                                            })
+                                        }).then((res) => res.json())
+                                            .then(resJson => {
+                                                if (resJson.status === 200) {
+                                                    Alert.alert(
+                                                        'Notification',
+                                                        'Update successfully',
+                                                        [
+                                                            {
+                                                                text: 'OK',
+                                                                style: 'cancel',
+                                                            },
+                                                        ],
+                                                    );
+                                                } else {
+                                                    Alert.alert(
+                                                        'Notification',
+                                                        'Cannot update your profile',
+                                                        [
+                                                            {
+                                                                text: 'cancel',
+                                                                style: 'cancel',
+                                                            },
+                                                        ],
+                                                    );
+                                                }
+                                            })
+                                    }
+                                    )
                             }}
                             validationSchema={validationSchema}>
                             {({
@@ -255,9 +278,11 @@ const Updateuser = () => {
                                 errors,
                                 setFieldTouched,
                                 touched,
-                                values
+                                values,
+                              
                             }) => (
                                     <>
+                                       
                                         <FormUpdate
                                             placeholder="Name"
                                             secureTextEntry={false}
@@ -317,7 +342,7 @@ const Updateuser = () => {
 
 const styles = StyleSheet.create({
     header: {
-        height:'100%',
+        height: '100%',
         //flex: 1,
         //alignItems: 'center',
         //height: 800,

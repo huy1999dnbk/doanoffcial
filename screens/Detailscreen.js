@@ -149,7 +149,7 @@ const Detailscreen = ({ route }) => {
     setAddStock(tmp);
   }
 
-  console.log(addStock);
+  //console.log(addStock);
   useEffect(() => {
     //console.log('Page', page);
     let isMounted = true;
@@ -388,12 +388,12 @@ const Detailscreen = ({ route }) => {
                   {
                     text: 'Yes',
                     onPress: () => {
-                      console.log('addSearch sau khi search' + searchProduct);
+                      //console.log('addSearch sau khi search' + searchProduct);
                       handleCart();
-                      console.log(addStock);
-                      console.log(addStock);
-                      console.log(addStock);
-                      console.log(addStock);
+                      //console.log(addStock);
+                      //console.log(addStock);
+                     // console.log(addStock);
+                      //console.log(addStock);
                     }
                   },
                   {
@@ -407,7 +407,7 @@ const Detailscreen = ({ route }) => {
               <Appbutton title="OK" onPress={() => {
                 handlejoinarray();
                 setShowAdd(false);
-                console.log('addStock sau khi nhan nut oke' + addStock);
+                //console.log('addStock sau khi nhan nut oke' + addStock);
               }} />
             </View>
           </View>

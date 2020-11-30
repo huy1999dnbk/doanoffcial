@@ -88,29 +88,27 @@ const SignupScreen = ({ navigation }) => {
   }
 
 
-  const uploadImageToStorage = (path, name) => {
-    setIsLoading(true);
-    let reference = storage().ref(name);
-    let task = reference.putFile(path);
-    task.then(() => {
-      console.log('Image uploaded to the bucket!');
-      //this.setState({ isLoading: false, status: 'Image uploaded successfully' });
-      setIsLoading(false);
-      setStatus('Image uploaded succesfully');
-      const getURL = async () => {
+  const uploadImageToStorage = async (path, name) => {
+    try {
+      if (isUploadSuccess) {
+        setIsLoading(true);
+        let reference = storage().ref(name);
+        let task = await reference.putFile(path);
+        setStatus('Image uploaded succesfully');
+        setIsLoading(false);
+
         const ref = storage().ref(name);
         const url = await ref.getDownloadURL();
-        //console.log(url);
-        setUrlFireBase(url);
+        //setUrlFireBase(url);
+        console.log(url);
+        return url;
       }
-      getURL();
-    }).catch((e) => {
-      status = 'Something went wrong';
-      console.log('uploading image error => ', e);
-      //this.setState({ isLoading: false, status: 'Something went wrong' });
+      else return imagePath
+    } catch (e) {
       setIsLoading(false);
       setStatus('Something went wrong');
-    });
+    };
+
   }
 
   const getPlatformPath = ({ path, uri }) => {
@@ -174,47 +172,51 @@ const SignupScreen = ({ navigation }) => {
                 address: '',
               }}
               onSubmit={async (values) => {
-                await fetch('https://managewarehouse.herokuapp.com/users', {
-                  method: 'POST',
-                  headers: {
-                    accept: 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    name: values.name,
-                    phone: values.phone,
-                    email: values.email,
-                    password: values.password,
-                    address: values.address,
-                    image: urlFireBase
-                  }),
-                })
-                  .then((response) => response.json())
-                  .then((responseJson) => {
-                    if (responseJson.message) {
-                      Alert.alert(
-                        'Notification',
-                        responseJson.message,
-                        [
-                          {
-                            text: 'cancel',
-                            style: 'cancel',
-                          },
-                        ],
-                      );
-                    } else {
-                      Alert.alert(
-                        'Notification',
-                        'Your account was created successfully',
-                        [
-                          {
-                            text: 'cancel',
-                            style: 'cancel',
-                          },
-                        ],
-                      );
-                    }
-                  });
+                const link = await uploadImageToStorage(localPath, localName);
+                return Promise.resolve(link)
+                  .then(async (link) => {
+                    await fetch('https://managewarehouse.herokuapp.com/users', {
+                      method: 'POST',
+                      headers: {
+                        accept: 'application/json',
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        name: values.name,
+                        phone: values.phone,
+                        email: values.email,
+                        password: values.password,
+                        address: values.address,
+                        image: link
+                      }),
+                    })
+                      .then((response) => response.json())
+                      .then((responseJson) => {
+                        if (responseJson.message) {
+                          Alert.alert(
+                            'Notification',
+                            responseJson.message,
+                            [
+                              {
+                                text: 'cancel',
+                                style: 'cancel',
+                              },
+                            ],
+                          );
+                        } else {
+                          Alert.alert(
+                            'Notification',
+                            'Your account was created successfully',
+                            [
+                              {
+                                text: 'cancel',
+                                style: 'cancel',
+                              },
+                            ],
+                          );
+                        }
+                      });
+                  })
               }}
               validationSchema={validationSchema}>
               {({

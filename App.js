@@ -17,20 +17,35 @@ import Detailscreen from './screens/Detailscreen';
 import { token } from './screens/Loginscreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignOutAlt, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import Appbutton from './component/Appbutton';
 import jwt_decode from "jwt-decode";
 import Updateuser from './screens/Updateuser';
+import { faIdBadge } from '@fortawesome/free-regular-svg-icons';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent({ ...props }) {
   return (
     <DrawerContentScrollView {...props}>
+      <DrawerItem
+        label={() => <Text style={{ color: 'black', textAlign: 'center', fontSize: 20 }}>Option</Text>}
+        style={{
+          height: '30%',
+          justifyContent: 'center',
+          borderBottomWidth: 1,
+          borderBottomColor: 'black'
+        }}
+      />
       <DrawerItemList {...props} />
       <DrawerItem
+        icon={() => <FontAwesomeIcon
+          style={styles.icondrawer}
+          icon={faSignOutAlt}
+          size={25}
+        />}
         label="Sign out"
         onPress={() =>
           Alert.alert('Notice!!!', 'You want to sign out?', [
@@ -318,8 +333,12 @@ const DrawerRoutes = () => {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="Main" component={MainRoutes} />
-      <Drawer.Screen name="Profile" component={UpdateRoutes} />
+      <Drawer.Screen name="Main" component={MainRoutes} options={{
+        drawerIcon: () => <FontAwesomeIcon style={styles.icondrawer} icon={faWarehouse} size={25} />
+      }} />
+      <Drawer.Screen name="Profile" component={UpdateRoutes} options={{
+        drawerIcon: () => <FontAwesomeIcon style={styles.icondrawer} icon={faIdBadge} size={25} />
+      }} />
     </Drawer.Navigator>
   );
 };
@@ -359,6 +378,9 @@ const styles = StyleSheet.create({
   icondetail: {
     color: '#fff',
     marginRight: 25
+  },
+  icondrawer:{
+    color: '#303e5c'
   },
   ViewCart: {
     alignSelf: 'center',
