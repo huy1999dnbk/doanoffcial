@@ -50,7 +50,6 @@ const Updateuser = ({ navigation }) => {
     const [localName, setLocalName] = useState('');
     const [localPath, setLocalPath] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [status, setStatus] = useState('');
     const [isUploadSuccess, setIsUploadSuccess] = useState(false);
     const [imgSource,setImgSource] = useState({})
 
@@ -93,7 +92,7 @@ const Updateuser = ({ navigation }) => {
     },[])
 
     const chooseFile = () => {
-        setStatus('');
+     
         var options = {
             title: 'Select Image',
             storageOptions: {
@@ -148,7 +147,7 @@ const Updateuser = ({ navigation }) => {
                 setIsLoading(true);
                 let reference = storage().ref(name);
                 let task = await reference.putFile(path);
-                setStatus('Image uploaded succesfully');
+         
                 setIsLoading(false);
 
                 const ref = storage().ref(name);
@@ -157,9 +156,9 @@ const Updateuser = ({ navigation }) => {
             }
             else return urlFireBase
         } catch (e) {
-            // status = 'Something went wrong';
+      
             setIsLoading(false);
-            setStatus('Something went wrong');
+     
         };
 
     }
@@ -205,11 +204,9 @@ const Updateuser = ({ navigation }) => {
                             <TouchableOpacity onPress={chooseFile}>
                                 <Image style={styles.uploadImage} source={imgSource} />
                             </TouchableOpacity>
-                            <View style={{ marginTop: 30, borderRadius: 15 }}>
-                                <Button title={'Upload Image'} />
-                            </View>
+                      
                             {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
-                            <Text style={styles.boldTextStyle}>{status}</Text>
+                      
                         </View>
                     </View>
                     <View style={{
