@@ -286,7 +286,7 @@ const MainRoutes = ({navigation}) => {
             },
             headerLeft: () => {
               return (
-                <Backarrow onPress={() => navigation.popToTop()} />
+                <Backarrow onPress={() => navigation.popToTop()} Color="#fff" />
               );
             },
             headerLeftContainerStyle:{

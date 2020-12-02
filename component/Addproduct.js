@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FC4646',
+    backgroundColor: '#fff',
   },
   icon: {
-    color: '#fff',
+    color: '#303e5c',
   },
 });
 

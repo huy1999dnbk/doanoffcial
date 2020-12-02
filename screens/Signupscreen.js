@@ -149,9 +149,6 @@ const SignupScreen = ({ navigation }) => {
               <TouchableOpacity onPress={chooseFile}>
                 <Image style={styles.uploadImage} source={imgSource} />
               </TouchableOpacity>
-              <View style={{ marginTop: 30, borderRadius: 15 }}>
-                <Button title={'Upload Image'} onPress={() => uploadImageToStorage(localPath, localName)} />
-              </View>
               {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
               <Text style={styles.boldTextStyle}>{status}</Text>
             </View>
@@ -277,7 +274,7 @@ const SignupScreen = ({ navigation }) => {
                       <Appbutton title="Register" onPress={handleSubmit} />
                     </View>
                     <View style={styles.arrow}>
-                      <Backarrow onPress={() => navigation.navigate('Login')} />
+                      <Backarrow Color="#3f51b5" onPress={() => navigation.navigate('Login')} />
                     </View>
                   </>
                 )}
@@ -299,7 +296,8 @@ const styles = StyleSheet.create({
   },
   arrow: {
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 25,
+    marginBottom:30
   },
   text: {
     color: '#FFF0F0',

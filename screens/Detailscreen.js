@@ -247,6 +247,7 @@ const Detailscreen = ({ route }) => {
           height: 1,
           width: '100%',
           backgroundColor: 'black',
+          
         }}
       />
     );
@@ -368,8 +369,8 @@ const Detailscreen = ({ route }) => {
 
         <Modal visible={showAdd} animationType="none">
           <View style={styles.addproduct}>
-            <View>
-              <Text>SEARCH PRODUCT</Text>
+            <View style={{alignSelf:'center', marginBottom:50}}>
+              <Text style={{color:'#3f51b5', fontFamily:'Roboto-Medium'}}>SEARCH PRODUCT</Text>
             </View>
             <View style={{ marginHorizontal: 15, marginBottom: 40 }}>
               <TextInput
@@ -479,10 +480,12 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   container: {
-    width: '100%',
+    width: 400,
     height: 300,
     borderColor: 'black',
-    borderWidth: 1,
+    borderWidth: 0.5,
+    marginHorizontal:10,
+    borderRadius:10
   },
 
   text: {
@@ -507,7 +510,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     elevation: 20,
     zIndex: 1,
-    marginBottom: 30
+    marginBottom: 30,
   },
   bigright: {
     position: 'absolute',

@@ -40,9 +40,10 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
+    width:'88%',
     backgroundColor: 'rgba(255,255,255,0)',
     marginHorizontal: 20,
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: 'Roboto-Bold',
   },
   icon: {marginLeft: 15, marginRight: -15,color: '#3f51b5'},

@@ -6,11 +6,11 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 
-const Backarrow = ({ onPress }) => {
+const Backarrow = ({ onPress,Color }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View>
-        <FontAwesomeIcon style={styles.icon} icon={faArrowLeft} size={20} />
+        <FontAwesomeIcon color={Color} style={styles.icon} icon={faArrowLeft} size={20} />
       </View>
     </TouchableOpacity>
   );
@@ -18,7 +18,6 @@ const Backarrow = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   icon: {
-    color: '#fff',
   },
 });
 export default Backarrow;
