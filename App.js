@@ -17,7 +17,7 @@ import Detailscreen from './screens/Detailscreen';
 import { token } from './screens/Loginscreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBars, faSignOutAlt, faWarehouse } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faClipboardList, faEllipsisH, faEllipsisV, faSignOutAlt, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import Appbutton from './component/Appbutton';
@@ -25,6 +25,15 @@ import jwt_decode from "jwt-decode";
 import Updateuser from './screens/Updateuser';
 import { faIdBadge } from '@fortawesome/free-regular-svg-icons';
 import Backarrow from './component/Backarrow';
+import Userhistory from './screens/Userhistory';
+import WhouseHistory from './screens/WhouseHistory';
+import { MenuProvider } from 'react-native-popup-menu';
+import {
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -34,7 +43,7 @@ function CustomDrawerContent({ ...props }) {
       <DrawerItem
         label={() => <Text style={{ color: 'black', textAlign: 'center', fontSize: 20 }}>Option</Text>}
         style={{
-          height: '30%',
+          height: '20%',
           justifyContent: 'center',
           borderBottomWidth: 1,
           borderBottomColor: 'black'
@@ -65,10 +74,23 @@ function CustomDrawerContent({ ...props }) {
   );
 }
 
+const Icondrop = () => {
+  return (
+    <FontAwesomeIcon
+      style={styles.icondetail}
+      icon={faEllipsisV}
+      size={25}
+    />
+  );
+};
+
+
+const MainRoutes = ({ navigation }) => {
 
 
 
-const MainRoutes = ({navigation}) => {
+
+
   const [adduser, setAddUser] = useState(false);
   const [query, setQuery] = useState('');
   const [user, setUser] = useState([]);
@@ -94,6 +116,7 @@ const MainRoutes = ({navigation}) => {
     )
   };
   const [showModal, setShowModal] = useState(false);
+
 
 
 
@@ -271,26 +294,34 @@ const MainRoutes = ({navigation}) => {
         <Stack.Screen
           name="Detail"
           component={Detailscreen}
-          options={({navigation}) => ({
+          options={({ navigation }) => ({
             headerRight: () => {
               return adduser ?
                 (
-                  <TouchableOpacity onPress={() => setShowModal(true)}>
-                    <FontAwesomeIcon
-                      style={styles.icondetail}
-                      icon={faUserPlus}
-                      size={25}
-                    />
-                  </TouchableOpacity>
-                ) : null
+                  <View>
+                    <Menu on>
+                      <MenuTrigger children={<Icondrop />}
+                      />
+                      <MenuOptions>
+                        <MenuOption onSelect={() => navigation.navigate('History')}>
+                          <Text style={{ color: '#2b2c2e', paddingBottom: 10, paddingTop: 10, textTransform: 'uppercase', fontWeight:'bold' }}>history warehouse </Text>
+                        </MenuOption>
+                        <MenuOption onSelect={() => setShowModal(true)} >
+                          <Text style={{ color: '#2b2c2e', paddingBottom: 10, paddingTop: 10, textTransform: 'uppercase', fontWeight:'bold' }}>add user</Text>
+                        </MenuOption>
+                      </MenuOptions>
+                    </Menu>
+                  </View>
+                )
+                : null
             },
             headerLeft: () => {
               return (
                 <Backarrow onPress={() => navigation.popToTop()} Color="#fff" />
               );
             },
-            headerLeftContainerStyle:{
-              marginLeft:10
+            headerLeftContainerStyle: {
+              marginLeft: 10,
             },
             title: 'DETAIL',
             headerTitleStyle: {
@@ -304,11 +335,17 @@ const MainRoutes = ({navigation}) => {
 
           })}
         />
+        <Stack.Screen
+          name="History"
+          component={WhouseHistory}
+          options={() => ({
+            title: 'HISTORY WAREHOUSE'
+          })}
+        />
       </Stack.Navigator>
     </>
   );
 };
-
 
 
 const UpdateRoutes = () => {
@@ -328,7 +365,7 @@ const UpdateRoutes = () => {
             );
           },
           title: 'Profile',
-        
+
           headerStyle: {
             backgroundColor: '#2b2c2e'
           },
@@ -343,6 +380,37 @@ const UpdateRoutes = () => {
   );
 };
 
+const UserHistory = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="History" component={Userhistory}
+        options={({ navigation }) => ({
+          headerLeft: () => {
+            return (
+              <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+                <FontAwesomeIcon
+                  style={styles.icon}
+                  icon={faBars}
+                  size={30}
+                />
+              </TouchableOpacity>
+            );
+          },
+          title: 'User History',
+
+          headerStyle: {
+            backgroundColor: '#2b2c2e'
+          },
+          headerTitleStyle: {
+            alignSelf: 'center',
+            marginRight: 50,
+            color: '#fff'
+          },
+        })}
+      ></Stack.Screen>
+    </Stack.Navigator>
+  );
+}
 
 const DrawerRoutes = () => {
   return (
@@ -354,6 +422,9 @@ const DrawerRoutes = () => {
       <Drawer.Screen name="Profile" component={UpdateRoutes} options={{
         drawerIcon: () => <FontAwesomeIcon style={styles.icondrawer} icon={faIdBadge} size={25} />
       }} />
+      <Drawer.Screen name="History" component={UserHistory} options={{
+        drawerIcon: () => <FontAwesomeIcon style={styles.icondrawer} icon={faClipboardList} size={25} />
+      }} />
     </Drawer.Navigator>
   );
 };
@@ -362,25 +433,27 @@ const App = () => {
 
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen
-            name="Login"
-            component={Loginscreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signupscreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Main"
-            component={DrawerRoutes}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <MenuProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Login"
+              component={Loginscreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signupscreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Main"
+              component={DrawerRoutes}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </MenuProvider>
     </>
   );
 };

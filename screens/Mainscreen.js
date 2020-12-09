@@ -63,6 +63,7 @@ const Mainscreen = ({ navigation }) => {
       <Swiper showsButtons={false} style={{ height: 250, marginBottom: 50, }} showsPagination={false}>
         <Pressable
           onPress={() => {
+            
             navigation.navigate('Detail', {
               idwarehouse: item.id,
             });

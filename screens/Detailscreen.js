@@ -52,7 +52,7 @@ const Detailscreen = ({ route }) => {
   const handlejoinarray = () => {
     setAddStock(loadCart(addStock));
   };
-
+  //console.log(addStock);
   //ham nay them search product vao mang
   const add_search = (x) => {
     if (searchProduct.length === 0) {
