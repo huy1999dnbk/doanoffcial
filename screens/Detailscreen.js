@@ -37,9 +37,9 @@ const Detailscreen = ({ route }) => {
   const [reRender, setReRender] = useState(false);
   const [searchProduct, setSearchProduct] = useState([]);
   const [showCart, setShowCart] = useState(false)
-  const [dataSrc,setDataSrc] = useState([]);
+  const [dataSrc, setDataSrc] = useState([]);
   //const [cart, setCart] = useState([]);
-  const takeid = async() => {
+  const takeid = async () => {
     await AsyncStorage.setItem('id_warehouse', idwarehouse.toString());
   }
   takeid();
@@ -186,7 +186,7 @@ const Detailscreen = ({ route }) => {
   // fetch product de tim kiem real time
   const fetchProduct = async () => {
     const tokenuser01 = await AsyncStorage.getItem('idtoken');
-    if (query === ''){
+    if (query === '') {
       setProduct([]);
     }
     else if (query !== '') {
@@ -247,7 +247,7 @@ const Detailscreen = ({ route }) => {
           height: 1,
           width: '100%',
           backgroundColor: 'black',
-          
+
         }}
       />
     );
@@ -282,7 +282,7 @@ const Detailscreen = ({ route }) => {
           flex: 1,
           backgroundColor: 'white',
           zIndex: 1,
-          marginTop:5
+          marginTop: 5
         }}>
         <View style={styles.bigright}>
           <ImportIcon
@@ -369,8 +369,8 @@ const Detailscreen = ({ route }) => {
 
         <Modal visible={showAdd} animationType="none">
           <View style={styles.addproduct}>
-            <View style={{alignSelf:'center', marginBottom:50}}>
-              <Text style={{color:'#3f51b5', fontFamily:'Roboto-Medium'}}>SEARCH PRODUCT</Text>
+            <View style={{ alignSelf: 'center', marginBottom: 50 }}>
+              <Text style={{ color: '#3f51b5', fontFamily: 'Roboto-Medium' }}>SEARCH PRODUCT</Text>
             </View>
             <View style={{ marginHorizontal: 15, marginBottom: 40 }}>
               <TextInput
@@ -419,7 +419,6 @@ const Detailscreen = ({ route }) => {
           data={productByIdWh}
           numColumns={1}
           keyExtractor={(item) => item.id.toString()}
-          initialNumToRender={8}
           renderItem={({ item }) => (
             <Input
               idwarehouse={idwarehouse}
@@ -436,14 +435,9 @@ const Detailscreen = ({ route }) => {
               }}
             />
           )}
-          getItemLayout={(data, index) => ({
-            length: 80,
-            offset: 80 * index,
-            index,
-          })}
           ListFooterComponent={handleFooter}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.2}
         />
       </View>
     </>
@@ -459,9 +453,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     //borderWidth: 2,
     borderColor: 'black',
-    opacity:0.9,
-    justifyContent:'center',
-    borderRadius:20
+    opacity: 0.9,
+    justifyContent: 'center',
+    borderRadius: 20
   },
   ViewCart: {
     alignSelf: 'center',
@@ -472,7 +466,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     //borderWidth: 2,
     borderColor: 'black',
-    opacity:0.97
+    opacity: 0.97
   },
   listcart: {
     height: 400,
@@ -484,8 +478,8 @@ const styles = StyleSheet.create({
     height: 300,
     borderColor: 'black',
     borderWidth: 0.5,
-    marginHorizontal:10,
-    borderRadius:10
+    marginHorizontal: 10,
+    borderRadius: 10
   },
 
   text: {
@@ -514,14 +508,14 @@ const styles = StyleSheet.create({
   },
   bigright: {
     position: 'absolute',
-    right: 20,
-    bottom: 20,
+    right: 10,
+    bottom: 10,
     zIndex: 2,
   },
   bigleft: {
     position: 'absolute',
-    left: 20,
-    bottom: 20,
+    left: 10,
+    bottom: 10,
     zIndex: 2,
   },
   searchInput: {

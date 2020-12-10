@@ -9,8 +9,6 @@ const WhouseHistory = () => {
     const fetchData = async () => {
         const token = await AsyncStorage.getItem('idtoken');
         const idwarehouse = await AsyncStorage.getItem('id_warehouse');
-        console.log(token);
-        console.log(idwarehouse);
         await fetch(`https://managewarehouse.herokuapp.com/histories/warehouses/${idwarehouse}`, {
             method: 'GET',
             headers: {
@@ -22,7 +20,6 @@ const WhouseHistory = () => {
             .then((res) => res.json())
             .then((resJson) => {
                 setData(resJson.data.histories);
-                console.log(dataHistory);
             })
     }
 
