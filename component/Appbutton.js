@@ -18,21 +18,22 @@ const Appbutton = ({title, onPress}) => {
 const styles = StyleSheet.create({
   custombutton: {
     paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
   },
   button: {
     paddingVertical: 10,
     paddingHorizontal: 12,
-    backgroundColor: '#3f51b5',
-    borderRadius:15
+    backgroundColor: '#2b2c2e',
+    borderRadius:15,
+    elevation:5
   },
   text: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#fff',
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
     alignSelf: 'center',
     textTransform: 'uppercase',
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'OleoScript-Regular',
   },
 });
 

@@ -10,7 +10,7 @@ const Backarrow = ({ onPress,Color }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.container}>
-        <FontAwesomeIcon color={Color} style={styles.icon} icon={faLongArrowAltLeft} size={35} />
+        <FontAwesomeIcon color={Color} style={styles.icon} icon={faArrowLeft} size={25} />
       </View>
     </TouchableOpacity>
   );

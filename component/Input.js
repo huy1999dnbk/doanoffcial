@@ -59,6 +59,7 @@ const Input = ({
                   onChangeText={(txt) => setText(txt)}
                   value={text}
                   placeholder="Ex: 100"
+                  
                 />
               </View>
             </View>

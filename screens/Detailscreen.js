@@ -10,7 +10,10 @@ import {
   ActivityIndicator,
   TextInput,
   Alert,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import Searchproduct from '../component/Searchproduct';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -20,7 +23,10 @@ import Appbutton from '../component/Appbutton';
 import Addproduct from '../component/Addproduct';
 import Input from '../component/Input';
 import ImportIcon from '../component/ImportIcon';
+import { LogBox } from 'react-native';
+
 const Detailscreen = ({ route }) => {
+  LogBox.ignoreLogs(['VirtualizedLists should never be nested inside plain ScrollViews with the same orientation - use another VirtualizedList-backed container instead.']);
   const [productByIdWh, setProductByIdWh] = useState([]);
   const [isShowModal, setShowModal] = useState(false);
   const [note, setNote] = useState('');
@@ -38,6 +44,7 @@ const Detailscreen = ({ route }) => {
   const [searchProduct, setSearchProduct] = useState([]);
   const [showCart, setShowCart] = useState(false)
   const [dataSrc, setDataSrc] = useState([]);
+  const [shift, setShift] = useState(false);
   //const [cart, setCart] = useState([]);
   const takeid = async () => {
     await AsyncStorage.setItem('id_warehouse', idwarehouse.toString());
@@ -282,8 +289,9 @@ const Detailscreen = ({ route }) => {
           flex: 1,
           backgroundColor: 'white',
           zIndex: 1,
-          marginTop: 5
+          marginTop:10
         }}>
+
         <View style={styles.bigright}>
           <ImportIcon
             onPress={() => {
@@ -415,30 +423,32 @@ const Detailscreen = ({ route }) => {
             </View>
           </View>
         </Modal>
-        <FlatList
-          data={productByIdWh}
-          numColumns={1}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Input
-              idwarehouse={idwarehouse}
-              name={item.name}
-              imageURL={item.image}
-              add_stock={add_stock}
-              pop_stock_imp={pop_stock_imp}
-              pop_stock_exp={pop_stock_exp}
-              stock={item.WarehouseProduct.stock.toString()}
-              onPress={() => {
-                setCreateAt(item.WarehouseProduct.createdAt);
-                setNote(item.note);
-                setShowModal(true);
-              }}
-            />
-          )}
-          ListFooterComponent={handleFooter}
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={0.2}
-        />
+        <ScrollView>
+          <FlatList
+            data={productByIdWh}
+            numColumns={1}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Input
+                idwarehouse={idwarehouse}
+                name={item.name}
+                imageURL={item.image}
+                add_stock={add_stock}
+                pop_stock_imp={pop_stock_imp}
+                pop_stock_exp={pop_stock_exp}
+                stock={item.WarehouseProduct.stock.toString()}
+                onPress={() => {
+                  setCreateAt(item.WarehouseProduct.createdAt);
+                  setNote(item.note);
+                  setShowModal(true);
+                }}
+              />
+            )}
+            ListFooterComponent={handleFooter}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
+          />
+        </ScrollView>
       </View>
     </>
   );

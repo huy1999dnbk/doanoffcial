@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, FlatList, Image } from 'react-native';
-
-
+import Moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArchive, faBookMedical, faClock, faPlus, faUserTie, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 const WhouseHistory = () => {
     const [dataHistory, setData] = useState([]);
 
@@ -34,6 +35,7 @@ const WhouseHistory = () => {
                 numColumns={1}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => {
+                    const dt = Moment.utc(item.date).format(" MM-DD-YYYY, hh:mm:ss ");
                     return (
                         <View style={styles.card}>
                             <View style={styles.image}>
@@ -42,10 +44,25 @@ const WhouseHistory = () => {
                                 }} />
                             </View>
                             <View style={styles.info}>
-                                <Text style={styles.text}>{item.products[0] ? item.products[0].name : "null"}</Text>
-                                <Text style={styles.text}>{item.date}</Text>
-                                <Text style={styles.text}>{item.users[0] ? item.users[0].name : "null"}</Text>
-                                <Text style={styles.text}>{item.note}</Text>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faArchive} color="#303e5c" size={15} />
+                                    <Text style={styles.text1}>{item.products[0] ? item.products[0].name : "null"}</Text>
+                                </View>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faUserTie} color="#303e5c" size={15} />
+                                    <Text style={styles.text}>{item.users[0] ? item.users[0].name : "null"}</Text>
+                                </View>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faBookMedical} color="#303e5c" size={15} />
+                                    <Text style={styles.text}>{item.note}</Text>
+                                </View>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faClock} color="#303e5c" size={15} />
+                                    <Text style={styles.text}>{dt}</Text>
+                                </View>
+                               
+                              
+                              
                             </View>
 
                         </View>
@@ -59,42 +76,54 @@ const WhouseHistory = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#fff',
+        backgroundColor: 'white',
+        marginTop: 10
     },
     card: {
         flex: 1,
         height: 180,
-        flexDirection:'row',
-        marginBottom:20,
-        marginHorizontal:10,
-        borderWidth:2,
-        borderRadius:10,
-        borderColor:'#0d023d'
+        flexDirection: 'row',
+        marginBottom: 20,
+        marginHorizontal: 10,
+      
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        elevation: 5
     },
-    image:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
+    image: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    info:{
-        flex:2,
-        justifyContent:'center',
-        alignItems:'flex-start',
-        paddingLeft:20
+    info: {
+        flex: 2,
+        justifyContent: 'flex-start',
+        //alignItems: 'flex-start',
+        paddingLeft: 20
     },
     text: {
-        color:'#1f1f3d',
-        fontFamily:'Roboto-Bold',
-        fontSize:14,
-        textTransform:'uppercase',
-        
+        color: '#1f1f3d',
+        fontFamily: 'Roboto-Light',
+        fontSize: 18,
+        textTransform: 'uppercase',
+
     },
-    tinyLogo:{
-        width:120,
-        height:120,
-        borderRadius:60,
-        borderColor:'black',
-        borderWidth:1
+    tinyLogo: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+    },
+    formtext: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    text1: {
+        fontFamily: 'Roboto-Bold',
+        fontSize: 21
+    },
+    icon: {
+        marginTop: 8,
+        marginRight: 5
     }
 });
 

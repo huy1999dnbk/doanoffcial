@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   },
   errorcontainer:{
     marginHorizontal: 47,
-    marginTop: -25,
-    marginBottom: 15
+    marginTop: -10,
+    marginBottom: 5
   }
 });
 

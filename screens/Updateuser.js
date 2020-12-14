@@ -203,7 +203,7 @@ const Updateuser = ({ navigation }) => {
                             <TouchableOpacity onPress={chooseFile}>
                                 <Image style={styles.uploadImage} source={imgSource} />
                             </TouchableOpacity>
-                      
+                            <Text style={styles.name1}>{current_name}</Text>
                             {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
                       
                         </View>
@@ -211,7 +211,7 @@ const Updateuser = ({ navigation }) => {
                     <View style={{
                         height: 1,
                         backgroundColor: "#CED0CE",
-                        marginHorizontal: "10%",
+                      
                         marginBottom: 15
                     }} />
                     <View style={styles.formik}>
@@ -329,7 +329,7 @@ const Updateuser = ({ navigation }) => {
                                             error={errors.address}
                                             visible={touched.address}
                                         />
-                                        <View style={{ marginHorizontal: 35 }}>
+                                        <View style={{  }}>
                                             <Appbutton title="UPDATE" onPress={handleSubmit} />
                                         </View>
                                     </>
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     },
     formik: {
         flex: 1,
-        paddingTop: 45,
+        //paddingTop: 5,
         //width: 380,
         height: 700,
         //backgroundColor: '#fff',
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         height: 300,
-
+       
     },
     eightyWidthStyle: {
         width: 200,
@@ -383,8 +383,8 @@ const styles = StyleSheet.create({
         height: 200,
         borderRadius: 100,
         alignSelf: 'center',
-        borderWidth:2,
-        borderColor:'black'
+        //borderWidth:2,
+        //borderColor:'black'
     },
     loadingIndicator: {
         zIndex: 5,
@@ -398,6 +398,12 @@ const styles = StyleSheet.create({
         color: 'black',
         fontFamily: 'Roboto-Light',
         textAlign: 'center',
+    },
+    name1:{
+        alignSelf:'center',
+        marginTop:15,
+        fontFamily:'Roboto-Bold',
+        fontSize:25,
     }
 });
 

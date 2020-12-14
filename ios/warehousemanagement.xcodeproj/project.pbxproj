@@ -28,6 +28,8 @@
 		566EEB9081C444C48251063B /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1667E5B87604AD286F04F46 /* Roboto-Regular.ttf */; };
 		1068B6E9775447CD84D4F31D /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E1A2C12373C44BF889DE8922 /* Roboto-Thin.ttf */; };
 		E377833E60004BFFB274069B /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0F4B4F8545454F5C883EFCC3 /* Roboto-ThinItalic.ttf */; };
+		D217A9F3FF164550B63F3BAC /* OleoScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9C1EA37FE1A48569513FDD3 /* OleoScript-Bold.ttf */; };
+		7E2AF612D0934424B515C00F /* OleoScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D88551E52E243EDB1F405C5 /* OleoScript-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		C1667E5B87604AD286F04F46 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		E1A2C12373C44BF889DE8922 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0F4B4F8545454F5C883EFCC3 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; name = "Roboto-ThinItalic.ttf"; path = "../assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A9C1EA37FE1A48569513FDD3 /* OleoScript-Bold.ttf */ = {isa = PBXFileReference; name = "OleoScript-Bold.ttf"; path = "../assets/fonts/OleoScript-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5D88551E52E243EDB1F405C5 /* OleoScript-Regular.ttf */ = {isa = PBXFileReference; name = "OleoScript-Regular.ttf"; path = "../assets/fonts/OleoScript-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +201,8 @@
 				C1667E5B87604AD286F04F46 /* Roboto-Regular.ttf */,
 				E1A2C12373C44BF889DE8922 /* Roboto-Thin.ttf */,
 				0F4B4F8545454F5C883EFCC3 /* Roboto-ThinItalic.ttf */,
+				A9C1EA37FE1A48569513FDD3 /* OleoScript-Bold.ttf */,
+				5D88551E52E243EDB1F405C5 /* OleoScript-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -352,6 +358,8 @@
 				566EEB9081C444C48251063B /* Roboto-Regular.ttf in Resources */,
 				1068B6E9775447CD84D4F31D /* Roboto-Thin.ttf in Resources */,
 				E377833E60004BFFB274069B /* Roboto-ThinItalic.ttf in Resources */,
+				D217A9F3FF164550B63F3BAC /* OleoScript-Bold.ttf in Resources */,
+				7E2AF612D0934424B515C00F /* OleoScript-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -35,20 +35,23 @@ const styles = StyleSheet.create({
   form: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 47,
-    marginBottom: 25,
-    borderWidth: 1.5,
-    borderColor: '#3f51b5',
-    //borderRadius: 15,
-    height: 50,
+    marginHorizontal: 10,
+    marginBottom: 15,
+    //borderWidth: 1,
+    //borderColor: '#3f51b5',
+    borderRadius: 10,
+    height: 60,
+    backgroundColor:'#f2efe6',
+    elevation:3
   },
   input: {
-    height: 50,
+    height: 60,
     width: '88%',
-    backgroundColor: 'rgba(255,255,255,0)',
+    //backgroundColor: 'rgba(255,255,255,0)',
     marginHorizontal: 20,
-    fontSize: 15,
-    fontFamily: 'Roboto-Bold',
+    fontSize: 18,
+    fontFamily: 'Roboto-Light',
+    fontWeight:'300'
   },
   icon: {marginLeft: 15, marginRight: -15,color: '#3f51b5'},
 });

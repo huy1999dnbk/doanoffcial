@@ -280,14 +280,16 @@ const MainRoutes = ({ navigation }) => {
                 </TouchableOpacity>
               );
             },
-            title: 'WAREHOUSE',
+            title: 'WAREHOUSES',
             headerTitleStyle: {
               alignSelf: 'center',
               marginRight: 30,
-              color: '#fff'
+              color: '#fff',
+              fontSize:25,
+              fontFamily:'OleoScript-Regular',
             },
             headerStyle: {
-              backgroundColor: '#3f51b5'
+              backgroundColor: '#2b2c2e'
             }
           })}
         />
@@ -299,15 +301,15 @@ const MainRoutes = ({ navigation }) => {
               return adduser ?
                 (
                   <View>
-                    <Menu on>
+                    <Menu>
                       <MenuTrigger children={<Icondrop />}
                       />
                       <MenuOptions>
                         <MenuOption onSelect={() => navigation.navigate('History')}>
-                          <Text style={{ color: '#2b2c2e', paddingBottom: 10, paddingTop: 10, textTransform: 'uppercase', fontWeight:'bold' }}>history warehouse </Text>
+                          <Text style={{ color: '#2b2c2e', paddingBottom: 10, paddingTop: 10, textTransform: 'uppercase', fontWeight: 'bold' }}>history warehouse </Text>
                         </MenuOption>
                         <MenuOption onSelect={() => setShowModal(true)} >
-                          <Text style={{ color: '#2b2c2e', paddingBottom: 10, paddingTop: 10, textTransform: 'uppercase', fontWeight:'bold' }}>add user</Text>
+                          <Text style={{ color: '#2b2c2e', paddingBottom: 10, paddingTop: 10, textTransform: 'uppercase', fontWeight: 'bold' }}>add user</Text>
                         </MenuOption>
                       </MenuOptions>
                     </Menu>
@@ -323,11 +325,13 @@ const MainRoutes = ({ navigation }) => {
             headerLeftContainerStyle: {
               marginLeft: 10,
             },
-            title: 'DETAIL',
+            title: 'DETAILS',
             headerTitleStyle: {
               alignSelf: 'center',
               marginRight: 15,
-              color: '#fff'
+              color: '#fff',
+              fontFamily:'OleoScript-Regular',
+              fontSize:25
             },
             headerStyle: {
               backgroundColor: '#2b2c2e'
@@ -338,9 +342,29 @@ const MainRoutes = ({ navigation }) => {
         <Stack.Screen
           name="History"
           component={WhouseHistory}
-          options={() => ({
-            title: 'HISTORY WAREHOUSE'
+          options={({navigation}) => ({
+            title: 'HISTORY WAREHOUSE',
+            headerTitleStyle:{
+              alignSelf: 'center',
+              marginRight: 15,
+              color: '#fff',
+              fontFamily:'OleoScript-Regular',
+              fontSize:25
+            },
+            headerLeft: () => {
+              return (
+                <Backarrow onPress={() => navigation.popToTop()} Color="#fff" />
+              );
+            },
+            headerLeftContainerStyle: {
+              marginLeft: 10,
+            },
+            headerStyle:{
+              backgroundColor: '#2b2c2e',
+            },
+            headerTintColor:'white'
           })}
+
         />
       </Stack.Navigator>
     </>
@@ -364,7 +388,7 @@ const UpdateRoutes = () => {
               </TouchableOpacity>
             );
           },
-          title: 'Profile',
+          title: 'PROFILE',
 
           headerStyle: {
             backgroundColor: '#2b2c2e'
@@ -372,7 +396,9 @@ const UpdateRoutes = () => {
           headerTitleStyle: {
             alignSelf: 'center',
             marginRight: 50,
-            color: '#fff'
+            color: '#fff',
+            fontFamily:'OleoScript-Regular',
+            fontSize:25
           },
         })}
       ></Stack.Screen>
@@ -396,7 +422,7 @@ const UserHistory = () => {
               </TouchableOpacity>
             );
           },
-          title: 'User History',
+          title: 'USER HISTORY',
 
           headerStyle: {
             backgroundColor: '#2b2c2e'
@@ -404,7 +430,9 @@ const UserHistory = () => {
           headerTitleStyle: {
             alignSelf: 'center',
             marginRight: 50,
-            color: '#fff'
+            color: '#fff',
+            fontFamily:'OleoScript-Regular',
+            fontSize:25
           },
         })}
       ></Stack.Screen>

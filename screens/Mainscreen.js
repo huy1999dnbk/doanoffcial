@@ -60,10 +60,10 @@ const Mainscreen = ({ navigation }) => {
 
   renderItem = ({ item }) => {
     return (
-      <Swiper showsButtons={false} style={{ height: 250, marginBottom: 50, }} showsPagination={false}>
+      <Swiper showsButtons={false} style={{ height: 250, marginBottom: 10, }} showsPagination={false}>
         <Pressable
           onPress={() => {
-            
+
             navigation.navigate('Detail', {
               idwarehouse: item.id,
             });
@@ -75,7 +75,7 @@ const Mainscreen = ({ navigation }) => {
                 uri: item.image,
               }}
             />
-            <View style={{ marginTop: 15, }}>
+            <View style={{ marginTop: 7, }}>
               <View style={styles.info}>
                 <FontAwesomeIcon
                   style={styles.icon}
@@ -175,21 +175,21 @@ const styles = StyleSheet.create({
     //paddingTop: 15,
     paddingHorizontal: 15,
     backgroundColor: 'white',
-    paddingTop:20
+    marginTop: 10
   },
   card: {
     //flexDirection: 'row',
     height: 250,
-    backgroundColor:'#757de8',
+    backgroundColor: '#303e5c',
     //alignItems: 'flex-start',
-    marginBottom: 50,
+    marginBottom: 10,
     //elevation: 10,
-    borderRadius: 22,
+    borderRadius: 10,
     //borderWidth:1
   },
   tinyLogo: {
-    borderTopLeftRadius:22,
-    borderTopRightRadius:22,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     width: '100%',
     height: 180,
     //borderWidth:1
@@ -198,10 +198,10 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   text: {
-    fontFamily: 'Roboto-BoldItalic',
-    fontSize: 13,
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
     marginLeft: 15,
-    color:'#fff'
+    color: '#fff'
   },
   info: {
     flexDirection: 'row',

@@ -16,6 +16,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import Appbutton from '../component/Appbutton';
 
@@ -27,6 +28,7 @@ const validationSchema = Yup.object().shape({
 const Loginscreen = ({ navigation }) => {
   //nhan vao sign up thi se clear data tren 2 form
   //console.log(token);
+  const [isLoading,setLoading] = useState(false);
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -38,11 +40,12 @@ const Loginscreen = ({ navigation }) => {
             // justifyContent: 'center',
             // alignItems: 'center',
             height: '100%',
+            paddingTop:80
           }}>
           <View style={{ alignItems: 'center' }}>
             <Image
-              style={{ width: 250, height: 250 }}
-              source={require('../assets/images/newlogo.png')}
+              style={{ width: 200, height: 200 }}
+              source={require('../assets/images/logo1.png')}
             />
           </View>
           <View style={styles.form}>
@@ -52,6 +55,7 @@ const Loginscreen = ({ navigation }) => {
                 password: '',
               }}
               onSubmit={async (values) => {
+                setLoading(true);
                 const check = async (item, selectedValue) => {
                   if (selectedValue) {
                     await AsyncStorage.setItem(item, selectedValue);
@@ -73,6 +77,7 @@ const Loginscreen = ({ navigation }) => {
                     .then((response) => response.json())
                     .then((responseData) => {
                       if (responseData.message) {
+                        setLoading(false);
                         Alert.alert('Notification', responseData.message, [
                           {
                             text: 'cancel',
@@ -80,6 +85,7 @@ const Loginscreen = ({ navigation }) => {
                           },
                         ]);
                       } else {
+                        setLoading(false);
                         check('idtoken', responseData.token);
                         navigation.push('Main');
                       }
@@ -95,8 +101,8 @@ const Loginscreen = ({ navigation }) => {
                 touched,
               }) => (
                   <>
-                    <View style={{ marginLeft: 50, marginBottom: 10 }}>
-                      <Text style={{ fontFamily: 'Roboto-Medium', color: '#3f51b5' }}>Email</Text>
+                    <View style={{ marginLeft: 50, marginBottom: 2 }}>
+                      <Text style={{ fontFamily: 'Roboto-Medium', color: '#3f51b5',fontSize: 16 }}>Email</Text>
                     </View>
                     <Formfield
                       placeholder="Email"
@@ -106,8 +112,8 @@ const Loginscreen = ({ navigation }) => {
                       onBlur={() => setFieldTouched('email')}
                     />
                     <ErrorMessage error={errors.email} visible={touched.email} />
-                    <View style={{ marginLeft: 50, marginBottom: 10 }}>
-                      <Text style={{ fontFamily: 'Roboto-Medium', color: '#3f51b5' }}>Password</Text>
+                    <View style={{ marginLeft: 50, marginBottom: 2 }}>
+                      <Text style={{ fontFamily: 'Roboto-Medium', color: '#3f51b5',fontSize: 16 }}>Password</Text>
                     </View>
                     <Formfield
                       placeholder="Password"
@@ -120,7 +126,7 @@ const Loginscreen = ({ navigation }) => {
                       error={errors.password}
                       visible={touched.password}
                     />
-                    <View style={{ marginHorizontal: 35, marginTop: 30 }}>
+                    <View style={{ marginHorizontal: 20, marginTop: 30 }}>
                       <Appbutton title="LOGIN" onPress={handleSubmit} />
                     </View>
                     <View style={styles.signup}>
@@ -129,6 +135,7 @@ const Loginscreen = ({ navigation }) => {
                         title="Register"
                       />
                     </View>
+                    {isLoading && <ActivityIndicator color="#2b2c2e" size="large" style={styles.loadingIndicator} />}
                   </>
                 )}
             </Formik>
@@ -147,7 +154,13 @@ const styles = StyleSheet.create({
   signup: {
     alignItems: 'center',
     marginTop: 30,
+    marginBottom:40
   },
+  loadingIndicator: {
+    width: 40,
+    height: 40,
+    alignSelf: 'center'
+},
 });
 
 

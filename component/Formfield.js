@@ -21,6 +21,7 @@ const Formfield = ({
           style={styles.input}
           placeholder={placeholder}
           onBlur={onBlur}
+          autoCompleteType="off"
         />
       </View>
     </>
@@ -31,19 +32,20 @@ const styles = StyleSheet.create({
   form: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 47,
-    marginBottom: 25,
-    borderWidth: 1.5,
-    borderColor: '#3f51b5',
+    marginHorizontal: 27,
+    marginBottom: 10,
+    borderRadius:20,
     //borderRadius: 15,
-    height: 50,
+    height: 65,
+    backgroundColor:'#f2efe6',
+    elevation:3
   },
   input: {
-    height: 50,
+    height: 65,
     width:'88%',
     backgroundColor: 'rgba(255,255,255,0)',
     marginHorizontal: 20,
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: 'Roboto-Bold',
   },
   icon: {marginLeft: 15, marginRight: -15,color: '#3f51b5'},

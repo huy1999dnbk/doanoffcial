@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, FlatList } from 'react-native';
+import Moment from 'moment';
+
 import AsyncStorage from '@react-native-community/async-storage';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArchive, faBookMedical, faClock, faPlus, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 const Userhistory = ({ navigation }) => {
     const [data, setData] = useState([]);
 
@@ -34,7 +38,7 @@ const Userhistory = ({ navigation }) => {
 
     useEffect(() => {
         fetchData();
-    },[])
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -43,6 +47,7 @@ const Userhistory = ({ navigation }) => {
                 numColumns={1}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => {
+                    const dt = Moment.utc(item.date).format(" MM-DD-YYYY, hh:mm:ss ");
                     return (
                         <View style={styles.card}>
                             <View style={styles.image}>
@@ -52,10 +57,22 @@ const Userhistory = ({ navigation }) => {
                                 />
                             </View>
                             <View style={styles.info}>
-                                <Text style={styles.text}>{item.date}</Text>
-                                <Text style={styles.text}>{item.note}</Text>
-                                <Text style={styles.text}>{item.warehouse.name}</Text>
-                                <Text style={styles.text}>{item.products[0] ? item.products[0].name : "null"}</Text>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faArchive} color="#303e5c" size={15} />
+                                    <Text style={styles.text1}>{item.products[0] ? item.products[0].name : "null"}</Text>
+                                </View>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faWarehouse} color="#303e5c" size={15} />
+                                    <Text style={styles.text}>{item.warehouse.name}</Text>
+                                </View>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faBookMedical} color="#303e5c" size={15} />
+                                    <Text style={styles.text}>{item.note}</Text>
+                                </View>
+                                <View style={styles.formtext}>
+                                    <FontAwesomeIcon style={styles.icon} icon={faClock} color="#303e5c" size={15} />
+                                    <Text style={styles.text}>{dt}</Text>
+                                </View>
                             </View>
                         </View>
                     );
@@ -73,32 +90,44 @@ const styles = StyleSheet.create({
     },
     card: {
         flex: 1,
-        flexDirection: 'column',
-        height: 500,
-        borderColor: 'black',
-        borderWidth: 2,
+        flexDirection: 'row',
+        height: 140,
         marginHorizontal: 10,
-        marginBottom: 20,
-        borderRadius: 15
+        marginBottom: 10,
+        borderRadius: 15,
+        elevation: 25,
+        backgroundColor: '#fff'
     },
     image: {
-        flex: 5,
-        borderBottomColor: 'black',
-        borderBottomWidth: 2,
-        flexWrap: 'wrap'
+        flex: 1,
+        flexWrap: 'wrap',
+        justifyContent: 'center'
     },
     info: {
         flex: 2,
-        justifyContent: 'center'
+        justifyContent: 'flex-start',
+        paddingLeft: 5
     },
     tinyLogo: {
         width: '100%',
         height: '100%',
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15
+        borderRadius: 20
     },
     text: {
-        fontFamily: 'Roboto-Bold'
+        fontFamily: 'Roboto-Light',
+        fontSize: 18
+    },
+    text1: {
+        fontFamily: 'Roboto-Bold',
+        fontSize: 21
+    },
+    formtext: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    icon: {
+        marginTop: 8,
+        marginRight: 5
     }
 });
 

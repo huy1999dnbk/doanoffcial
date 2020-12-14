@@ -5,11 +5,10 @@ const Buttonaction = ({title, onPress,disabled}) => {
     return (
         <TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
             <View style={styles.container}>
-                <Text style={{color:'white'}}>{title}</Text>
+                <Text style={{color:'white',fontFamily:'OleoScript-Regular'}}>{title}</Text>
             </View>
         </TouchableWithoutFeedback>
     );
-
 };
 
 const styles = StyleSheet.create({
