@@ -231,7 +231,7 @@ const Detailscreen = ({ route }) => {
   handleFooter = () => {
     return Loading ? (
       <View style={styles.loader}>
-        <ActivityIndicator size="small" color="red" />
+        <ActivityIndicator size="small" color="#2b2c2e" />
       </View>
     ) : null;
   };

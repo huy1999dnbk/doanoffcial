@@ -353,7 +353,7 @@ const MainRoutes = ({ navigation }) => {
             },
             headerLeft: () => {
               return (
-                <Backarrow onPress={() => navigation.popToTop()} Color="#fff" />
+                <Backarrow onPress={() => navigation.goBack()} Color="#fff" />
               );
             },
             headerLeftContainerStyle: {

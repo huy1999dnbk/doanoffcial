@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, FlatList, Image } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Image, ActivityIndicator } from 'react-native';
 import Moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArchive, faBookMedical, faClock, faPlus, faUserTie, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 const WhouseHistory = () => {
     const [dataHistory, setData] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(false);
     const fetchData = async () => {
         const token = await AsyncStorage.getItem('idtoken');
         const idwarehouse = await AsyncStorage.getItem('id_warehouse');
@@ -21,15 +21,18 @@ const WhouseHistory = () => {
             .then((res) => res.json())
             .then((resJson) => {
                 setData(resJson.data.histories);
+                setIsLoading(false);
             })
     }
 
     useEffect(() => {
+        setIsLoading(true);
         fetchData();
     }, [])
 
     return (
         <View style={styles.container}>
+            {isLoading && <ActivityIndicator color="#2b2c2e" size="large" style={styles.loadingIndicator} />}
             <FlatList
                 data={dataHistory}
                 numColumns={1}
@@ -44,7 +47,7 @@ const WhouseHistory = () => {
                                 }} />
                             </View>
                             <View style={styles.info}>
-                                <View style={styles.formtext}>
+                                <View style={styles.formtext1}>
                                     <FontAwesomeIcon style={styles.icon} icon={faArchive} color="#303e5c" size={15} />
                                     <Text style={styles.text1}>{item.products[0] ? item.products[0].name : "null"}</Text>
                                 </View>
@@ -117,14 +120,24 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
+    formtext1: {
+        flex: 2,
+        flexDirection: 'row',
+    },
     text1: {
         fontFamily: 'Roboto-Bold',
-        fontSize: 21
+        fontSize: 21,
+       
     },
     icon: {
         marginTop: 8,
         marginRight: 5
-    }
+    },
+    loadingIndicator: {
+        width: 40,
+        height: 40,
+        alignSelf: 'center'
+    },
 });
 
 export default WhouseHistory;

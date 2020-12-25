@@ -105,12 +105,15 @@ const Mainscreen = ({ navigation }) => {
           });
         }}>
           <View style={styles.card}>
-            <FontAwesomeIcon
-              style={styles.icon}
-              icon={faClipboard}
-              size={18}
-            />
-            <Text style={styles.text}>Description: {item.description}</Text>
+            <View >
+              <FontAwesomeIcon
+                style={styles.icon1}
+                icon={faClipboard}
+                size={30}
+              />
+              <Text style={{color:'white', fontSize:20,marginLeft:50,marginTop:-26,fontFamily:'OleoScript-Regular'}}>Description</Text>
+            </View >
+            <Text numberOfLines={3} style={styles.text1}> {item.description}</Text>
           </View>
         </Pressable>
       </Swiper>
@@ -131,7 +134,7 @@ const Mainscreen = ({ navigation }) => {
   handleFooter = () => {
     return isLoading ? (
       <View style={styles.loader}>
-        <ActivityIndicator size="small" color="red" />
+        <ActivityIndicator size="small" color="#2b2c2e" />
       </View>
     ) : null;
   };
@@ -197,11 +200,23 @@ const styles = StyleSheet.create({
   icon: {
     color: '#fff',
   },
+  icon1: {
+    color: '#fff',
+    marginLeft: 10,
+    marginTop: 10
+  },
   text: {
     fontFamily: 'Roboto-Bold',
     fontSize: 16,
     marginLeft: 15,
     color: '#fff'
+  },
+  text1: {
+    fontFamily: 'Roboto-Bold',
+    fontSize: 16,
+    marginLeft: 15,
+    color: '#fff',
+    paddingTop:20
   },
   info: {
     flexDirection: 'row',

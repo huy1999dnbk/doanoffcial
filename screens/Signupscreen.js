@@ -91,7 +91,7 @@ const SignupScreen = ({ navigation }) => {
   const uploadImageToStorage = async (path, name) => {
     try {
       if (isUploadSuccess) {
-        setIsLoading(true);
+      
         let reference = storage().ref(name);
         let task = await reference.putFile(path);
         setStatus('Image uploaded succesfully');
@@ -105,7 +105,7 @@ const SignupScreen = ({ navigation }) => {
       }
       else return imagePath
     } catch (e) {
-      setIsLoading(false);
+     
       setStatus('Something went wrong');
     };
 
@@ -149,7 +149,7 @@ const SignupScreen = ({ navigation }) => {
               <TouchableOpacity onPress={chooseFile}>
                 <Image style={styles.uploadImage} source={imgSource} />
               </TouchableOpacity>
-              {isLoading && <ActivityIndicator color="red" size="large" style={styles.loadingIndicator} />}
+              {isLoading && <ActivityIndicator color="#2b2c2e" size="large" style={styles.loadingIndicator} />}
               <Text style={styles.boldTextStyle}>{status}</Text>
             </View>
           </View>
@@ -169,6 +169,7 @@ const SignupScreen = ({ navigation }) => {
                 address: '',
               }}
               onSubmit={async (values) => {
+                setIsLoading(true);
                 const link = await uploadImageToStorage(localPath, localName);
                 return Promise.resolve(link)
                   .then(async (link) => {
@@ -200,7 +201,9 @@ const SignupScreen = ({ navigation }) => {
                               },
                             ],
                           );
+                          setIsLoading(false);
                         } else {
+                         
                           Alert.alert(
                             'Notification',
                             'Your account was created successfully',
@@ -211,6 +214,7 @@ const SignupScreen = ({ navigation }) => {
                               },
                             ],
                           );
+                          setIsLoading(false);
                         }
                       });
                   })

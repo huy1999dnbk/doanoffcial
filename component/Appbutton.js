@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     backgroundColor: '#2b2c2e',
     borderRadius:15,
-    elevation:5
   },
   text: {
     fontSize: 20,

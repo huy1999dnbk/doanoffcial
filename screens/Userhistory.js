@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, FlatList } from 'react-native';
+import { View, StyleSheet, Text, Image, FlatList,ActivityIndicator } from 'react-native';
 import Moment from 'moment';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArchive, faBookMedical, faClock, faPlus, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 const Userhistory = ({ navigation }) => {
     const [data, setData] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(false);
     const fetchData = async () => {
         const token = await AsyncStorage.getItem('idtoken');
         const iduser = await AsyncStorage.getItem('id_USER');
@@ -22,6 +22,7 @@ const Userhistory = ({ navigation }) => {
             .then((res) => res.json())
             .then((resJson) => {
                 setData(resJson.data.histories);
+                setIsLoading(false);
             })
     };
 
@@ -31,17 +32,20 @@ const Userhistory = ({ navigation }) => {
             // The screen is focused
             // Call any action
             //console.log(1)
+            setIsLoading(true);
             fetchData();
         });
         return unsubscribe
     }, [navigation])
 
     useEffect(() => {
+        setIsLoading(true);
         fetchData();
     }, [])
 
     return (
         <View style={styles.container}>
+            {isLoading && <ActivityIndicator color="#2b2c2e" size="large" style={styles.loadingIndicator} />}
             <FlatList
                 data={data}
                 numColumns={1}
@@ -57,7 +61,7 @@ const Userhistory = ({ navigation }) => {
                                 />
                             </View>
                             <View style={styles.info}>
-                                <View style={styles.formtext}>
+                                <View style={styles.formtext1}>
                                     <FontAwesomeIcon style={styles.icon} icon={faArchive} color="#303e5c" size={15} />
                                     <Text style={styles.text1}>{item.products[0] ? item.products[0].name : "null"}</Text>
                                 </View>
@@ -125,10 +129,19 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
+    formtext1: {
+        flex: 2,
+        flexDirection: 'row',
+    },
     icon: {
         marginTop: 8,
         marginRight: 5
-    }
+    },
+    loadingIndicator: {
+        width: 40,
+        height: 40,
+        alignSelf: 'center'
+    },
 });
 
 export default Userhistory;
